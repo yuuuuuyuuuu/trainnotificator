@@ -23,7 +23,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_weight="3">
 
         <LinearLayout
             android:orientation="vertical"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_setting_notification_default_start_time"
                 android:drawableLeft="@drawable/ic_action_alarms"
-                android:id="@+id/button" />
+                android:id="@+id/button_setting_start_time" />
 
         </LinearLayout>
 
@@ -67,18 +67,57 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_setting_notification_default_end_time"
                 android:drawableLeft="@drawable/ic_action_alarms"
-                android:id="@+id/button2" />
+                android:id="@+id/button_setting_end_time" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:background="@color/darkgray">
+        android:layout_weight="3">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/label_setting_notification_date"
+                android:id="@+id/textView4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/label_setting_date_weekday" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/label_setting_date_weekend"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/label_setting_date_allday"/>
+                </RadioGroup>
+            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

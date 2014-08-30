@@ -10,5 +10,9 @@
     <string name="label_setting_notification_end_time">通知終了</string>
     <string name="label_setting_notification_default_start_time">7:00</string>
     <string name="label_setting_notification_default_end_time">9:00</string>
+    <string name="label_setting_notification_date">曜日</string>
+    <string name="label_setting_date_weekday">平日のみ</string>
+    <string name="label_setting_date_weekend">土日のみ</string>
+    <string name="label_setting_date_allday">全日</string>
 
 </resources>
