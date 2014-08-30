@@ -8,59 +8,88 @@ import android.content.SharedPreferences;
  */
 public class UserDataManager {
 
+    // Key
+    private static String PREFERENCE_KEY_TRAINNOTIFICATION_= "preference_key_trainnotificator";
+    private static String DATA_KEY_START_HOUR_OF_DAY = "start_hour_of_day";
+    private static String DATA_KEY_START_MINUTE = "start_minute";
+    private static String DATA_KEY_END_HOUR_OF_DAY = "end_hour_of_day";
+    private static String DATA_KEY_END_MINUTE = "end_minute";
+    private static String DATA_KEY_DATE_TYPE = "date";
 
-
-    public static void Load(Context context)
+    private static SharedPreferences LoadSharedPreference(Context context)
     {
-        String PREF_KEY = "preference_key_trainnotificator";
-        SharedPreferences sharedPreference = context.getSharedPreferences(PREF_KEY, context.MODE_PRIVATE);
+        SharedPreferences sharedPreference = context.getSharedPreferences(UserDataManager.PREFERENCE_KEY_TRAINNOTIFICATION_, context.MODE_PRIVATE);
 
+        return sharedPreference;
     }
 
-    public static int[] GetStartTime()
+    public static int[] GetStartTime(Context context)
     {
         int hourOfDay = 0;
         int minute = 0;
 
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+        hourOfDay = sp.getInt(UserDataManager.DATA_KEY_START_HOUR_OF_DAY, -1);
+        minute = sp.getInt(UserDataManager.DATA_KEY_START_MINUTE, -1);
 
         int[] result = {hourOfDay, minute};
 
         return result;
     }
 
-    public static int[] GetEndTime()
+    public static int[] GetEndTime(Context context)
     {
         int hourOfDay = 0;
         int minute = 0;
 
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+        hourOfDay = sp.getInt(UserDataManager.DATA_KEY_END_HOUR_OF_DAY, -1);
+        minute = sp.getInt(UserDataManager.DATA_KEY_END_MINUTE, -1);
 
         int[] result = {hourOfDay, minute};
 
         return result;
     }
 
-    public static int GetDateType()
+    public static int GetDateType(Context context)
     {
         int dateType = 0;
+
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+        dateType = sp.getInt(UserDataManager.DATA_KEY_DATE_TYPE, -1);
 
         return dateType;
     }
 
-    public static void SaveStartTime(int hourOfDay, int minute)
+    public static void SaveStartTime(int hourOfDay, int minute, Context context)
     {
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
 
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(UserDataManager.DATA_KEY_START_HOUR_OF_DAY, hourOfDay);
+        editor.putInt(UserDataManager.DATA_KEY_START_MINUTE, minute);
+
+        editor.commit();
     }
 
-    public static void SaveEndTime(int hourOfDay, int minute)
+    public static void SaveEndTime(int hourOfDay, int minute, Context context)
     {
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
 
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(UserDataManager.DATA_KEY_END_HOUR_OF_DAY, hourOfDay);
+        editor.putInt(UserDataManager.DATA_KEY_END_MINUTE, minute);
+
+        editor.commit();
     }
 
-    public static void SaveDateType(int dateType)
+    public static void SaveDateType(int dateType, Context context)
     {
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
 
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(UserDataManager.DATA_KEY_DATE_TYPE, dateType);
+
+        editor.commit();
     }
-
-
-
 }

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TimePicker;
 
+import java.net.UnknownServiceException;
+
 /**
  * Created by Chieko on 8/30/14.
  */
@@ -19,10 +21,18 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
     private TimePickerDialog mTimePickerDialog = null;
 
+    // Button
     private Button mButtonSetStartTime = null;
     private Button mButtonSetEndTime = null;
     private int mLastClickButtonId = -1;
 
+    // Radio Button
+    
+
+    // Date Type
+    private final static int DATE_TYPE_WEEKDAY = 1;
+    private final static int DATE_TYPE_WEEKEND = 2;
+    private final static int DATE_TYPE_ALLDAY = 3;
 
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
@@ -33,7 +43,71 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         this.setTimePickerDialog();
 
+        this.setUserTime();
+
         return this.mView;
+    }
+
+    private void setUserTime()
+    {
+        int[] startTime = UserDataManager.GetStartTime(getActivity());
+        int[] endTime = UserDataManager.GetEndTime(getActivity());
+
+        // start
+        int startHourOfDay = startTime[0];
+        int startMinute = startTime[1];
+        String startLabel = "7:00";
+        if(-1 == startHourOfDay || -1 == startMinute)
+        {
+            Log.d("setUserTime", "setting default start time");
+        }
+        else
+        {
+            if(startMinute < 10)
+            {
+                startLabel = String.valueOf(startHourOfDay) + ":" + String.valueOf(startMinute) + "0";
+            }
+            else
+            {
+                startLabel = String.valueOf(startHourOfDay) + ":" + String.valueOf(startMinute);
+            }
+
+        }
+        this.mButtonSetStartTime.setText(startLabel);
+
+        // end
+        int endHourOfDay = endTime[0];
+        int endMinute = endTime[1];
+        String endLabel = "9:00";
+        if(-1 == endHourOfDay || -1 == endMinute)
+        {
+            Log.d("setUserTime", "setting default end time");
+        }
+        else
+        {
+            if(endMinute < 10)
+            {
+                endLabel = String.valueOf(endHourOfDay) + ":" + String.valueOf(endMinute) + "0";
+            }
+            else
+            {
+                endLabel = String.valueOf(endHourOfDay) + ":" + String.valueOf(endMinute);
+            }
+
+        }
+        this.mButtonSetEndTime.setText(endLabel);
+
+        // Date type
+        int dateType = UserDataManager.GetDateType(getActivity());
+        if(-1 == dateType)
+        {
+
+        }
+        else
+        {
+            this.setDateType(dateType);
+        }
+
     }
 
     private void setTimePickerDialog()
@@ -65,6 +139,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d("setStartTime", "Setting start time " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
 
+        UserDataManager.SaveStartTime(hourOfDay, minute, getActivity());
+
         String label = String.valueOf(hourOfDay) + ":" + String.valueOf(minute);
         this.mButtonSetStartTime.setText(label);
     }
@@ -73,8 +149,31 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d("setEndTime", "Setting end time " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
 
+        UserDataManager.SaveEndTime(hourOfDay, minute, getActivity());
+
         String label = String.valueOf(hourOfDay) + ":" + String.valueOf(minute);
         this.mButtonSetEndTime.setText(label);
+    }
+
+    private void setDateType(int dateType)
+    {
+
+        switch (dateType)
+        {
+            case SettingFragment.DATE_TYPE_WEEKDAY:
+
+                break;
+
+            case SettingFragment.DATE_TYPE_WEEKEND:
+                break;
+
+            case SettingFragment.DATE_TYPE_ALLDAY:
+                break;
+
+            default:
+                break;
+
+        }
     }
 
     @Override
