@@ -18,13 +18,19 @@
             android:name="com.dev.android.yuu.trainnotificator.TrainInfoFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_train_info" />
+            tools:layout="@layout/fragment_train_info"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1">
+        <fragment
+            android:id="@+id/setting_fragment"
+            android:name="com.dev.android.yuu.trainnotificator.SettingFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_setting" />
     </LinearLayout>
 
 </LinearLayout>
