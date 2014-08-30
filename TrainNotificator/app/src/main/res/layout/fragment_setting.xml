@@ -38,6 +38,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textView2"
                 android:text="@string/label_setting_notification_start_time" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_setting_notification_default_start_time"
+                android:drawableLeft="@drawable/ic_action_alarms"
+                android:id="@+id/button" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -53,6 +61,13 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textView3"
                 android:text="@string/label_setting_notification_end_time" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_setting_notification_default_end_time"
+                android:drawableLeft="@drawable/ic_action_alarms"
+                android:id="@+id/button2" />
         </LinearLayout>
 
     </LinearLayout>
