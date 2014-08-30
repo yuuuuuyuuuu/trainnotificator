@@ -1,5 +1,6 @@
 package com.dev.android.yuu.trainnotificator;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
@@ -7,32 +8,57 @@ import android.content.SharedPreferences;
  */
 public class UserDataManager {
 
-    private SharedPreferences mSharedPreference = null;
-    private SharedPreferences.Editor mEditor = null;
 
-    public static void Load()
+
+    public static void Load(Context context)
+    {
+        String PREF_KEY = "preference_key_trainnotificator";
+        SharedPreferences sharedPreference = context.getSharedPreferences(PREF_KEY, context.MODE_PRIVATE);
+
+    }
+
+    public static int[] GetStartTime()
+    {
+        int hourOfDay = 0;
+        int minute = 0;
+
+
+        int[] result = {hourOfDay, minute};
+
+        return result;
+    }
+
+    public static int[] GetEndTime()
+    {
+        int hourOfDay = 0;
+        int minute = 0;
+
+
+        int[] result = {hourOfDay, minute};
+
+        return result;
+    }
+
+    public static int GetDateType()
+    {
+        int dateType = 0;
+
+        return dateType;
+    }
+
+    public static void SaveStartTime(int hourOfDay, int minute)
     {
 
     }
 
-    public static void Save()
+    public static void SaveEndTime(int hourOfDay, int minute)
     {
 
     }
 
-    public static void UpdateStartTime(int hourOfDay, int minute)
+    public static void SaveDateType(int dateType)
     {
 
-    }
-
-    public static void UpdateEndTime(int hourOfDay, int minute)
-    {
-
-    }
-
-    public static void UpdateDate()
-    {
-        
     }
 
 
