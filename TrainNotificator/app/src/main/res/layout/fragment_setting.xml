@@ -106,17 +106,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:text="@string/label_setting_date_weekday" />
+                    android:text="@string/label_setting_date_weekday"
+                    android:id="@+id/radiobutton_setting_weekday" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/label_setting_date_weekend"/>
+                    android:text="@string/label_setting_date_weekend"
+                    android:id="@+id/radiobutton_setting_weekend" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/label_setting_date_allday"/>
+                    android:text="@string/label_setting_date_allday"
+                    android:id="@+id/radiobutton_setting_allday" />
                 </RadioGroup>
             </LinearLayout>
     </LinearLayout>
