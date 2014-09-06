@@ -3,6 +3,7 @@ package com.dev.android.yuu.trainnotificator.utility;
 import android.util.Log;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Chieko on 9/6/14.
@@ -11,20 +12,55 @@ public class CalendarUtility
 {
     private static final String TAG = "CalendarUtility";
 
+    public static int GetCurrentHourOfDay()
+    {
+        Log.d(CalendarUtility.TAG, "GetCurrentHourOfDay()");
+        Calendar calendar = Calendar.getInstance();
+
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public static int GetCurrentMinute()
+    {
+        Log.d(CalendarUtility.TAG, "GetCurrentMinute()");
+        Calendar calendar = Calendar.getInstance();
+
+        return calendar.get(Calendar.MINUTE);
+    }
+
+    public static int GetCurrentSecond()
+    {
+        Log.d(CalendarUtility.TAG, "GetCurrentSecond()");
+        Calendar calendar = Calendar.getInstance();
+
+        return calendar.get(Calendar.SECOND);
+    }
+
     public static int GetTodayDate()
     {
         Log.d(CalendarUtility.TAG, "GetTodayDate()");
 
-        Calendar calendar = null;
+        Calendar calendar = Calendar.getInstance();
 
-        return Calendar.SUNDAY;
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        Log.d(CalendarUtility.TAG, "day:" + day);
+
+        return day;
     }
 
-    public static int GetTommorowDate()
+    public static int GetTommorowDay()
     {
         Log.d(CalendarUtility.TAG, "GetTommorowDate()");
 
-        return Calendar.SUNDAY;
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        Log.d(CalendarUtility.TAG, "day:" + day);
+
+        return day;
     }
 
     public static Calendar GetNextWeekdayCalendar()
