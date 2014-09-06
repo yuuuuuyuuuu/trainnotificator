@@ -3,7 +3,14 @@ package com.dev.android.yuu.trainnotificator;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +22,15 @@ import android.os.Build;
 
 public class MainActivity extends Activity {
 
+    private NotificationAlarmManager mNotificationAlarmManager = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.mNotificationAlarmManager = new NotificationAlarmManager(this);
+
         /*
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()

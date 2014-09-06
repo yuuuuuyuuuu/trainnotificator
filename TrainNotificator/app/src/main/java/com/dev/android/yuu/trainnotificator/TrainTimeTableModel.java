@@ -7,7 +7,7 @@ public class TrainTimeTableModel
 {
     public  TrainTimeTableModel()
     {
-        
+
     }
 
 }
