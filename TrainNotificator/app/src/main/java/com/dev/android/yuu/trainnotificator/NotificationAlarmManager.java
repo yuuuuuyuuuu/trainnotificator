@@ -60,8 +60,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
     {
         Log.d("onReceive", "Receiving broadcast intent");
 
-        CalendarUtility.GetTommorowDate();
-
         Random rand = new Random();
 
         this.mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -79,6 +77,9 @@ public class NotificationAlarmManager extends BroadcastReceiver
         builder.setAutoCancel(true);
 
         this.mNotificationManager.notify(rand.nextInt(100), builder.build());
+
+        TrainTimeTableModel tTTM = new TrainTimeTableModel(context);
+
     }
 
 
