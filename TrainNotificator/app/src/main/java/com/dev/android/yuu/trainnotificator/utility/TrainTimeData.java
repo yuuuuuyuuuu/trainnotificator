@@ -1,5 +1,7 @@
 package com.dev.android.yuu.trainnotificator.utility;
 
+import android.util.Log;
+
 /**
  * Created by Chieko on 9/6/14.
  */
@@ -12,7 +14,27 @@ public class TrainTimeData
 
     public TrainTimeData()
     {
+        Log.d(this.getClass().toString(), "Default constructor");
+    }
 
+    public TrainTimeData(int hourOfDay, int minute, int trainType, String destination)
+    {
+        Log.d(this.getClass().toString(), "Constructor with parameters");
+
+        this.mHourOfDay = hourOfDay;
+        this.mMinute = minute;
+        this.mTrainType = trainType;
+        this.mDestination = destination;
+    }
+
+    public void Set(int hourOfDay, int minute, int trainType, String destination)
+    {
+        Log.d(this.getClass().toString(), "Set");
+
+        this.mHourOfDay = hourOfDay;
+        this.mMinute = minute;
+        this.mTrainType = trainType;
+        this.mDestination = destination;
     }
 
     public int HourOfDay()
