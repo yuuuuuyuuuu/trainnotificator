@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Chieko on 8/31/14.
@@ -17,42 +18,92 @@ public class TrainTimeTableModel
 {
     private Context mContext = null;
 
-    private static final String TAG = "TrainTimeTableModel";
+    private ArrayList<TrainTimeData> mWeekdayTrainTimeDataList = null;
+    private ArrayList<TrainTimeData> mWeekendTrainTimeDataList = null;
+
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY = "timetable_shonanshinjukuline_weekday.txt";
 
     public  TrainTimeTableModel(Context context)
     {
-        Log.d(TrainTimeTableModel.TAG, "TrainTimeTableModel()");
+        Log.d(this.getClass().toString(), "TrainTimeTableModel()");
 
         this.mContext = context;
 
         this.loadTimeTable();
     }
 
-    public int NetTrainHourOfDay()
+    public TrainTimeData GetNextTrainTime()
     {
-        Log.d(TrainTimeTableModel.TAG, "NetTrainHourOfDay()");
+        Log.d(this.getClass().toString(), "GetNextTrainTime()");
 
-        return 0;
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TrainTimeData nextTrainData = this.findNextTrainTime(hourOfDay, minute);
+        Log.d(this.getClass().toString(), "nextTrainData hourOfDay:" + nextTrainData.HourOfDay() + "  minute:" + nextTrainData.Minute());
+
+        return nextTrainData;
     }
 
-    public int NextTrainMinute()
+    private TrainTimeData findNextTrainTime(int hourOfDay, int minute)
     {
-        Log.d(TrainTimeTableModel.TAG, "NextTrainMinute()");
+        Log.d(this.getClass().toString(), "findNextTrainTime(" + hourOfDay + ", " + minute + ")");
 
-        return 0;
+        // search weekday time table
+        if(null == this.mWeekdayTrainTimeDataList)
+        {
+            Log.e(this.getClass().toString(), "mWeekdayTrainTimeDataList in null.");
+            return null;
+        }
+
+        TrainTimeData nextTrainTimeData = null;
+        for(TrainTimeData timeData : this.mWeekdayTrainTimeDataList)
+        {
+            // past time data
+            if(timeData.HourOfDay() < hourOfDay) continue;
+
+            // TODO: may be able to combine if statements
+            if(timeData.HourOfDay() == hourOfDay)
+            {
+                if(timeData.Minute() <= minute) continue;
+
+                // Next data found
+                nextTrainTimeData = timeData;
+                Log.d(this.getClass().toString(), "next data found. hourOfDay:" + timeData.HourOfDay() + "  minute:" + timeData.Minute());
+                break;
+            }
+            else if(hourOfDay < timeData.HourOfDay())
+            {
+                // Next data found
+                nextTrainTimeData = timeData;
+                Log.d(this.getClass().toString(), "next data found. hourOfDay:" + timeData.HourOfDay() + "  minute:" + timeData.Minute());
+                break;
+            }
+
+        }
+
+        if(null == nextTrainTimeData)
+        {
+            Log.d(this.getClass().toString(), "next data NOT found.");
+        }
+
+        return nextTrainTimeData;
+
     }
 
     private void loadTimeTable()
     {
-        Log.d(TrainTimeTableModel.TAG, "loadTimeTable()");
+        Log.d(this.getClass().toString(), "loadTimeTable()");
 
+        this.mWeekdayTrainTimeDataList = new ArrayList<TrainTimeData>();
         AssetManager am = this.mContext.getAssets();
 
         InputStream is = null;
 
         try
         {
-            is = am.open("timetable_shonanshinjukuline.txt");
+            is = am.open(FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY);
         }
         catch (IOException e)
         {
@@ -80,16 +131,23 @@ public class TrainTimeTableModel
                 int hourOfDay = this.extractHourOfDay(line);
                 ArrayList<Integer> minuteArray = this.extractMinute(line);
 
+                for(Integer minuteData : minuteArray)
+                {
+                    TrainTimeData newData = new TrainTimeData(hourOfDay, minuteData, 0, "");
+                    this.mWeekdayTrainTimeDataList.add(newData);
+                }
             }
 
-            Log.d(TrainTimeTableModel.TAG, "line: " + line);
+            Log.d(this.getClass().toString(), "line: " + line);
         }
+
+        Log.d(this.getClass().toString(), "this.mWeekdayTrainTimeDataList.size(): " + this.mWeekdayTrainTimeDataList.size());
 
     }
 
     private int extractHourOfDay(String lineData)
     {
-        Log.d(TrainTimeTableModel.TAG, "extractHourOfDay(" + lineData + ")");
+        Log.d(this.getClass().toString(), "extractHourOfDay(" + lineData + ")");
 
         int hourOfDay = -1;
 
@@ -103,14 +161,14 @@ public class TrainTimeTableModel
         }
 
         hourOfDay = Integer.parseInt(splitted[0]);
-        Log.d(TrainTimeTableModel.TAG, "extracted hourOfDay: " + hourOfDay);
+        Log.d(this.getClass().toString(), "extracted hourOfDay: " + hourOfDay);
 
         return hourOfDay;
     }
 
     private ArrayList<Integer> extractMinute(String lineData)
     {
-        Log.d(TrainTimeTableModel.TAG, "extractMinute(" + lineData + ")");
+        Log.d(this.getClass().toString(), "extractMinute(" + lineData + ")");
 
         String[] splitted = lineData.split(":");
 
@@ -122,10 +180,10 @@ public class TrainTimeTableModel
         }
 
         String minuteString = splitted[1];
-        Log.d(TrainTimeTableModel.TAG, "minuteString: " + minuteString);
+        Log.d(this.getClass().toString(), "minuteString: " + minuteString);
 
         String[] minuteSplitted = minuteString.split(" ");
-        Log.d(TrainTimeTableModel.TAG, "minuteSplitted.length: " + minuteSplitted.length);
+        Log.d(this.getClass().toString(), "minuteSplitted.length: " + minuteSplitted.length);
 
         ArrayList<Integer> minuteArray = new ArrayList<Integer>();
         for(int i = 0; i < minuteSplitted.length; i++)
@@ -133,7 +191,7 @@ public class TrainTimeTableModel
             int minute = Integer.parseInt(minuteSplitted[i].replaceAll("[^0-9]", ""));
             String type = minuteSplitted[i].replaceAll("[^A-z]", "");
 
-            Log.d(TrainTimeTableModel.TAG, "minute: " + minute + "  type:" + type);
+            Log.d(this.getClass().toString(), "minute: " + minute + "  type:" + type);
 
             minuteArray.add(minute);
         }

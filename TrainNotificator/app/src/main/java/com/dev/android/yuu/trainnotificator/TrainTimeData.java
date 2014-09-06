@@ -1,4 +1,4 @@
-package com.dev.android.yuu.trainnotificator.utility;
+package com.dev.android.yuu.trainnotificator;
 
 import android.util.Log;
 

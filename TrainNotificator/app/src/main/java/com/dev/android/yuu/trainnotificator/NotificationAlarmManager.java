@@ -79,6 +79,7 @@ public class NotificationAlarmManager extends BroadcastReceiver
         this.mNotificationManager.notify(rand.nextInt(100), builder.build());
 
         TrainTimeTableModel tTTM = new TrainTimeTableModel(context);
+        tTTM.GetNextTrainTime();
 
     }
 
