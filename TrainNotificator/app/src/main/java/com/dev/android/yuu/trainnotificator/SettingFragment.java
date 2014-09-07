@@ -178,7 +178,10 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         UserDataManager.SaveStartTime(hourOfDay, minute, getActivity());
 
-        String label = String.valueOf(hourOfDay) + ":" + String.valueOf(minute);
+        String minuteString = String.valueOf(minute);
+        if(minute < 10) minuteString = "0" + minuteString;
+
+        String label = String.valueOf(hourOfDay) + ":" + minuteString;
         this.mButtonSetStartTime.setText(label);
     }
 
@@ -188,7 +191,10 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         UserDataManager.SaveEndTime(hourOfDay, minute, getActivity());
 
-        String label = String.valueOf(hourOfDay) + ":" + String.valueOf(minute);
+        String minuteString = String.valueOf(minute);
+        if(minute < 10) minuteString = "0" + minuteString;
+
+        String label = String.valueOf(hourOfDay) + ":" + minuteString;
         this.mButtonSetEndTime.setText(label);
     }
 

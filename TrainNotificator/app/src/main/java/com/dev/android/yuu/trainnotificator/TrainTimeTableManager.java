@@ -92,4 +92,18 @@ public class TrainTimeTableManager
         return nextTrainTimeData;
     }
 
+    /*
+    This methods returns next train data without concerning user preferred time range
+     */
+    public TrainTimeData FindNextTrainData()
+    {
+        Log.d(this.getClass().toString(), "FindNextTrainData");
+
+        TrainTimeData nextTrainTimeData = this.mTrainTimeTableModel.GetNextTrainTime();
+
+        Log.d(this.getClass().toString(), "nextTrainTimeData(" + nextTrainTimeData.HourOfDay() + ":" + nextTrainTimeData.Minute() + ")");
+
+        return nextTrainTimeData;
+    }
+
 }

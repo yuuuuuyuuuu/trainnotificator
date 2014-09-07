@@ -9,9 +9,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:background="#AAAAAA">
         <fragment
             android:id="@+id/traininfo_fragment"
@@ -22,9 +22,9 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="3">
         <fragment
             android:id="@+id/setting_fragment"
             android:name="com.dev.android.yuu.trainnotificator.SettingFragment"

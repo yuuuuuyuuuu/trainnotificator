@@ -22,6 +22,8 @@ public class TrainTimeTableModel
     private ArrayList<TrainTimeData> mWeekendTrainTimeDataList = null;
 
     private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY = "timetable_shonanshinjukuline_weekday.txt";
+    private static final String FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY = "timetable_sotetsu_ryokuen.txt";
+
 
     public  TrainTimeTableModel(Context context)
     {
@@ -112,7 +114,7 @@ public class TrainTimeTableModel
 
         try
         {
-            is = am.open(FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY);
+            is = am.open(FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY);
         }
         catch (IOException e)
         {

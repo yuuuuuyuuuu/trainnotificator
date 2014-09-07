@@ -3,4 +3,6 @@
     <color name="gray">#848484</color>
     <color name="lightgray">#AAAAAA</color>
     <color name="darkgray">#515151</color>
+    <color name="white">#FFFFFF</color>
+    <color name="almost_black">#222222</color>
 </resources>
