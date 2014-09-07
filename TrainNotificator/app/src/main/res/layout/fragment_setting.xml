@@ -9,7 +9,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3">
+        android:layout_weight="0.2">
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,7 +17,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textView"
             android:text="@string/label_setting_title"
-            android:textColor="@color/almost_black" />
+            android:textColor="@color/almost_black"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom" />
     </LinearLayout>
 
     <LinearLayout
@@ -34,7 +36,7 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:text="@string/label_setting_notification_default_start_time"
                 android:drawableLeft="@drawable/ic_action_alarms"
                 android:id="@+id/button_setting_start_time"
@@ -44,9 +46,9 @@
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="5"
-                android:textSize="16pt"
+                android:textSize="14pt"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="0dp"
                 android:paddingLeft="20dp"
@@ -72,7 +74,7 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:text="@string/label_setting_notification_default_end_time"
                 android:drawableLeft="@drawable/ic_action_alarms"
                 android:background="@drawable/round_green_button"
@@ -82,10 +84,10 @@
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="5"
-                android:textSize="16pt"
+                android:textSize="14pt"
                 android:layout_gravity="top"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="0dp"
                 android:paddingLeft="20dp"
@@ -108,20 +110,22 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="5">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="0.5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/label_setting_notification_date"
-                android:id="@+id/textView4" />
+                android:id="@+id/textView4"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="bottom" />
         </LinearLayout>
 
         <LinearLayout
@@ -132,26 +136,59 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
                     android:text="@string/label_setting_date_weekday"
-                    android:id="@+id/radiobutton_setting_weekday" />
+                    android:id="@+id/radiobutton_setting_weekday"
+                    android:background="@drawable/round_green_button"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="10pt"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:shadowColor="@color/gray"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="5"/>
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/label_setting_date_weekend"
-                    android:id="@+id/radiobutton_setting_weekend" />
+                    android:id="@+id/radiobutton_setting_weekend"
+                    android:background="@drawable/round_green_button"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="10pt"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:shadowColor="@color/gray"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="5"/>
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/label_setting_date_allday"
-                    android:id="@+id/radiobutton_setting_allday" />
+                    android:id="@+id/radiobutton_setting_allday"
+                    android:background="@drawable/round_green_button"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="10pt"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:shadowColor="@color/gray"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowRadius="5"/>
                 </RadioGroup>
             </LinearLayout>
     </LinearLayout>
