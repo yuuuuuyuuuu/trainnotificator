@@ -36,8 +36,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
     public NotificationAlarmManager()
     {
         Log.d(this.getClass().toString(), "default constructor");
-
-
     }
 
     public NotificationAlarmManager(Context context)
@@ -49,24 +47,27 @@ public class NotificationAlarmManager extends BroadcastReceiver
         TrainTimeData nextTrainData = this.mTrainTimeTableModel.GetNextTrainTime();
 
         this.SetNotification(this.mContext, nextTrainData.HourOfDay(), nextTrainData.Minute());
-        // this.SetNotification(this.mContext, 10, 10);
+
     }
 
     public void SetNotification(Context context, int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "SetNextNotification(" + hourOfDay + "," + minute);
 
+        // Setting next notification time
+        Calendar calendar = Calendar.getInstance();
+        Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
+
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
+
+        calendar.set(Calendar.MINUTE, minute);
+        Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
+
+        // Setting train time data
         Intent intent = new Intent(context, NotificationAlarmManager.class);
         intent.setData(Uri.parse("custom//" + System.currentTimeMillis()));
-        intent.putExtra(EXTRA_KEY_HOUR_OF_DAY, hourOfDay);
-        intent.putExtra(EXTRA_KEY_MINUTE, minute);
         PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        calendar.set(Calendar.MINUTE, minute);
-        //calendar.add(Calendar.SECOND, 5);
-        calendar.setTimeInMillis(System.currentTimeMillis());
 
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
@@ -77,28 +78,9 @@ public class NotificationAlarmManager extends BroadcastReceiver
     {
         Log.d("onReceive", "Receiving broadcast intent");
 
-        int hourOfDay = intent.getExtras().getInt(EXTRA_KEY_HOUR_OF_DAY);
-        int minute = intent.getExtras().getInt(EXTRA_KEY_MINUTE);
-        Log.d(this.getClass().toString(), "hourOfDay: " + hourOfDay + "  minute:" + minute);
+        this.mContext = context;
 
-        Random rand = new Random();
-
-        this.mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Intent i = new Intent(context, MainActivity.class);
-
-        PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentIntent(pIntent);
-        builder.setTicker("Next train is at " + hourOfDay + ":" + minute);
-        builder.setContentTitle("Next train information");
-        builder.setContentText("Next train is at " + hourOfDay + ":" + minute);
-        builder.setSmallIcon(R.drawable.ic_action_alarms);
-        builder.setAutoCancel(true);
-
-        this.mNotificationManager.notify(rand.nextInt(100), builder.build());
-
+        // Next train data
         TrainTimeTableModel timeTableModel = new TrainTimeTableModel(context);
         TrainTimeData nextTrainData = timeTableModel.GetNextTrainTime();
 
@@ -108,9 +90,41 @@ public class NotificationAlarmManager extends BroadcastReceiver
             return;
         }
 
+        // Create notification
+        Intent i = new Intent(context, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        String hourOfDayString = String.valueOf(nextTrainData.HourOfDay());
+        String minuteString = String.valueOf(nextTrainData.Minute());
+        if(nextTrainData.Minute() < 10)
+        {
+            minuteString = "0" + minuteString;
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setContentIntent(pIntent);
+        builder.setTicker("Next train is at " + hourOfDayString + ":" + nextTrainData.Minute());
+        builder.setContentTitle("Next train information");
+        builder.setContentText("Next train is at " + minuteString + ":" +nextTrainData.Minute());
+        builder.setSmallIcon(R.drawable.ic_action_alarms);
+        builder.setAutoCancel(true);
+
+        this.mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        this.mNotificationManager.notify(0, builder.build());
+
         this.SetNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
 
     }
 
+    private void LaunchNotification(NotificationCompat.Builder builder)
+    {
+        Log.d(this.getClass().toString(), "LaunchNotification");
 
+        if(null == this.mNotificationManager)
+        {
+            this.mNotificationManager = (NotificationManager)this.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+
+        this.mNotificationManager.notify(0, builder.build());
+    }
 }
