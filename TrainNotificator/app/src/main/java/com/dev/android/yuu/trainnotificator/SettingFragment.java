@@ -108,6 +108,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         if(-1 == dateType)
         {
             Log.d("setUserTime", "setting default date type");
+            this.mRadioButtonWeekday.setChecked(true);
         }
         else
         {
@@ -119,22 +120,19 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d(this.getClass().toString(), "setDateTypeCheck(" + dateType + ")");
 
-        this.setAllRadioButtonAreaUnselectedStyle();
+        //this.setAllRadioButtonAreaUnselectedStyle();
 
         switch (dateType)
         {
             case SettingFragment.DATE_TYPE_WEEKDAY:
-                this.setRadioButtonAreaSelectedStyle(SettingFragment.DATE_TYPE_WEEKDAY);
                 this.mRadioButtonWeekday.setChecked(true);
                 break;
 
             case SettingFragment.DATE_TYPE_WEEKEND:
-                this.setRadioButtonAreaSelectedStyle(SettingFragment.DATE_TYPE_WEEKEND);
                 this.mRadioButtonWeekend.setChecked(true);
                 break;
 
             case SettingFragment.DATE_TYPE_ALLDAY:
-                this.setRadioButtonAreaSelectedStyle(SettingFragment.DATE_TYPE_ALLDAY);
                 this.mRadioButtonAllday.setChecked(true);
                 break;
 
@@ -208,22 +206,19 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
     private void setDateType(int dateType)
     {
-        this.setAllRadioButtonAreaUnselectedStyle();
+        //this.setAllRadioButtonAreaUnselectedStyle();
 
         switch (dateType)
         {
             case SettingFragment.DATE_TYPE_WEEKDAY:
-                this.setRadioButtonAreaSelectedStyle(SettingFragment.DATE_TYPE_WEEKDAY);
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKDAY, getActivity());
                 break;
 
             case SettingFragment.DATE_TYPE_WEEKEND:
-                this.setRadioButtonAreaSelectedStyle(SettingFragment.DATE_TYPE_WEEKEND);
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKEND, getActivity());
                 break;
 
             case SettingFragment.DATE_TYPE_ALLDAY:
-                this.setRadioButtonAreaSelectedStyle(SettingFragment.DATE_TYPE_ALLDAY);
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_ALLDAY, getActivity());
                 break;
 
@@ -231,38 +226,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
                 break;
         }
     }
-
-    private void setAllRadioButtonAreaUnselectedStyle()
-    {
-        Log.d(this.getClass().toString(), "setAllRadioButtonAreaUnselectedStyle");
-
-        Resources res = getResources();
-        this.mRadioButtonWeekday.setBackgroundResource(R.drawable.round_button_pale_green);
-        this.mRadioButtonWeekend.setBackgroundResource(R.drawable.round_button_pale_green);
-        this.mRadioButtonAllday.setBackgroundResource(R.drawable.round_button_pale_green);
-    }
-
-    private void setRadioButtonAreaSelectedStyle(int dateType)
-    {
-        switch (dateType)
-        {
-            case SettingFragment.DATE_TYPE_WEEKDAY:
-                this.mRadioButtonWeekday.setBackgroundResource(R.drawable.round_green_button);
-                break;
-
-            case SettingFragment.DATE_TYPE_WEEKEND:
-                this.mRadioButtonWeekend.setBackgroundResource(R.drawable.round_green_button);
-                break;
-
-            case SettingFragment.DATE_TYPE_ALLDAY:
-                this.mRadioButtonAllday.setBackgroundResource(R.drawable.round_green_button);
-                break;
-
-            default:
-                break;
-        }
-    }
-
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute)
@@ -319,6 +282,16 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         int radioButtonId = compoundButton.getId();
         Log.d("onCheckedChanged RadioButtonId: ", String.valueOf(radioButtonId));
 
+        // style
+        if(isChecked)
+        {
+            this.setSelectedStyle((RadioButton)compoundButton);
+        }
+        else
+        {
+            this.setUnselectedStyle((RadioButton)compoundButton);
+        }
+
         if(!isChecked) return;
 
         switch (radioButtonId)
@@ -341,11 +314,27 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
     }
 
+    private void setSelectedStyle(RadioButton radioButton)
+    {
+        Log.d(this.getClass().toString(), "setSelectedStyle");
+
+        radioButton.setBackgroundResource(R.drawable.round_green_button);
+    }
+
+    private void setUnselectedStyle(RadioButton radioButton)
+    {
+        Log.d(this.getClass().toString(), "setUnselectedStyle");
+
+        radioButton.setBackgroundResource(R.drawable.round_button_pale_green);
+    }
+
     private void UpdateNextNotification()
     {
         Log.d(this.getClass().toString(), "UpdateNextNotification");
 
-        
+
     }
+
+
 
 }
