@@ -46,6 +46,15 @@ public class TrainTimeTableModel
         return nextTrainData;
     }
 
+    public TrainTimeData GetNextTraimTime(int targetHourOfDay, int targetMinute)
+    {
+        Log.d(this.getClass().toString(), "GetNextTraimTime(" + targetHourOfDay + "," + targetMinute + ")");
+
+        TrainTimeData nextTrainData = this.findNextTrainTime(targetHourOfDay, targetMinute);
+
+        return nextTrainData;
+    }
+
     private TrainTimeData findNextTrainTime(int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "findNextTrainTime(" + hourOfDay + ", " + minute + ")");

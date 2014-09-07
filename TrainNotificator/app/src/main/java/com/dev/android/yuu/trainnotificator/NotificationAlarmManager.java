@@ -58,11 +58,15 @@ public class NotificationAlarmManager extends BroadcastReceiver
         Calendar calendar = Calendar.getInstance();
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
 
+        /*
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
 
         calendar.set(Calendar.MINUTE, minute);
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
+        */
+
+        calendar.add(Calendar.SECOND, 5);
 
         // Setting train time data
         Intent intent = new Intent(context, NotificationAlarmManager.class);
@@ -81,8 +85,13 @@ public class NotificationAlarmManager extends BroadcastReceiver
         this.mContext = context;
 
         // Next train data
+        TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
+        TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
+
+        /*
         TrainTimeTableModel timeTableModel = new TrainTimeTableModel(context);
         TrainTimeData nextTrainData = timeTableModel.GetNextTrainTime();
+        */
 
         if(null == nextTrainData)
         {
@@ -103,9 +112,9 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pIntent);
-        builder.setTicker("Next train is at " + hourOfDayString + ":" + nextTrainData.Minute());
+        builder.setTicker("Next train is at " + hourOfDayString + ":" + minuteString);
         builder.setContentTitle("Next train information");
-        builder.setContentText("Next train is at " + minuteString + ":" +nextTrainData.Minute());
+        builder.setContentText("Next train is at " + hourOfDayString + ":" + minuteString);
         builder.setSmallIcon(R.drawable.ic_action_alarms);
         builder.setAutoCancel(true);
 
