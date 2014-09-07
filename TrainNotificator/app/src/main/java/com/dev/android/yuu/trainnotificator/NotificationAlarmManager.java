@@ -113,7 +113,7 @@ public class NotificationAlarmManager extends BroadcastReceiver
         builder.setTicker("Next train is at " + hourOfDayString + ":" + minuteString);
         builder.setContentTitle("Next train information");
         builder.setContentText("Next train is at " + hourOfDayString + ":" + minuteString);
-        builder.setSmallIcon(R.drawable.ic_action_alarms);
+        builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setAutoCancel(true);
 
         this.mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);

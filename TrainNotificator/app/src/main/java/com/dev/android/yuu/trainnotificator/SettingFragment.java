@@ -293,7 +293,10 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             default:
                 break;
         }
+    }
 
+    private void updateCurrentSettingLabel()
+    {
 
     }
 }
