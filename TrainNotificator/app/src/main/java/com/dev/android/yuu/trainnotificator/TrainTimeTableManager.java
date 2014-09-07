@@ -43,6 +43,7 @@ public class TrainTimeTableManager
         while(!isNextTrainTimeDataFound)
         {
             loopCounter++;
+            Log.d(this.getClass().toString(), "while loop loopCounter: " + loopCounter);
 
             TrainTimeData timeDataCandidate = this.mTrainTimeTableModel.GetNextTrainTime();
             boolean isStartTimeWithinRange = false;

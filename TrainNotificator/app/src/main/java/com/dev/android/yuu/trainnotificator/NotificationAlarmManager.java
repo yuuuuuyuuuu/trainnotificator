@@ -87,11 +87,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
         TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
         TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
 
-        /*
-        TrainTimeTableModel timeTableModel = new TrainTimeTableModel(context);
-        TrainTimeData nextTrainData = timeTableModel.GetNextTrainTime();
-        */
-
         if(null == nextTrainData)
         {
             Log.e(this.getClass().toString(), "Could NOT find next train data");

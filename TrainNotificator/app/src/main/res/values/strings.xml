@@ -12,7 +12,7 @@
     <string name="label_setting_notification_date">通知する曜日の設定</string>
     <string name="label_setting_date_weekday">平日のみ</string>
     <string name="label_setting_date_weekend">土日のみ</string>
-    <string name="label_setting_date_allday">全日</string>
+    <string name="label_setting_date_allday">毎日</string>
     <string name="label_traininfo_traintime">データがありません</string>
     <string name="label_traininfo_title">次の電車は</string>
     <string name="label_notification_title">次の湘南新宿ライン</string>
