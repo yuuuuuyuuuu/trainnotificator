@@ -15,5 +15,9 @@
     <string name="label_setting_date_allday">全日</string>
     <string name="label_traininfo_traintime">データがありません</string>
     <string name="label_traininfo_title">次の電車は</string>
+    <string name="label_notification_title">次の湘南新宿ライン</string>
+    <string name="label_notification_message_prefix">次の湘南新宿ラインは</string>
+    <string name="label_notification_message_suffix">です。</string>
+
 
 </resources>

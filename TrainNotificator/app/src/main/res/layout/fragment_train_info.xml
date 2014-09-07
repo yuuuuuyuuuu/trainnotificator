@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkgray">
+    android:background="@color/pale_orange">
 
     <TextView
         android:layout_width="wrap_content"
@@ -11,7 +11,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/label_traininfo_title"
         android:id="@+id/textView"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:shadowColor="@color/gray"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"/>
 
     <TextView
         android:id="@+id/textView_trainInfo"
@@ -19,7 +23,11 @@
         android:layout_height="wrap_content"
         android:text="@string/label_traininfo_traintime"
         android:layout_gravity="center"
-        android:textSize="20pt"
-        android:textColor="@color/white" />
+        android:textSize="32pt"
+        android:textColor="@color/white"
+        android:shadowColor="@color/gray"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="5"/>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -108,11 +109,16 @@ public class NotificationAlarmManager extends BroadcastReceiver
             minuteString = "0" + minuteString;
         }
 
+        Resources res = this.mContext.getResources();
+        String notificationTitle = res.getString(R.string.label_notification_title);
+        String notificationTicker = res.getString(R.string.label_notification_message_prefix) + hourOfDayString + ":" + minuteString + res.getString(R.string.label_notification_message_suffix);
+        String notificationContent = notificationTicker;
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentIntent(pIntent);
-        builder.setTicker("Next train is at " + hourOfDayString + ":" + minuteString);
-        builder.setContentTitle("Next train information");
-        builder.setContentText("Next train is at " + hourOfDayString + ":" + minuteString);
+        builder.setTicker(notificationTicker);
+        builder.setContentTitle(notificationTitle);
+        builder.setContentText(notificationContent);
         builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setAutoCancel(true);
 
