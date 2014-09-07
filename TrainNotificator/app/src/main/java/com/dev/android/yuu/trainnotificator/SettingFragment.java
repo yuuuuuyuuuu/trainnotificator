@@ -1,6 +1,7 @@
 package com.dev.android.yuu.trainnotificator;
 
 import android.app.Fragment;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.net.UnknownServiceException;
 
@@ -120,8 +122,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d(this.getClass().toString(), "setDateTypeCheck(" + dateType + ")");
 
-        //this.setAllRadioButtonAreaUnselectedStyle();
-
         switch (dateType)
         {
             case SettingFragment.DATE_TYPE_WEEKDAY:
@@ -189,6 +189,10 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         String label = String.valueOf(hourOfDay) + ":" + minuteString;
         this.mButtonSetStartTime.setText(label);
+
+        this.updateNextNotification();
+
+        this.showToast("通知開始時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
 
     private void setEndTime(int hourOfDay, int minute)
@@ -202,29 +206,38 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         String label = String.valueOf(hourOfDay) + ":" + minuteString;
         this.mButtonSetEndTime.setText(label);
+
+        this.updateNextNotification();
+
+        this.showToast("通知修了時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
 
     private void setDateType(int dateType)
     {
-        //this.setAllRadioButtonAreaUnselectedStyle();
-
         switch (dateType)
         {
             case SettingFragment.DATE_TYPE_WEEKDAY:
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKDAY, getActivity());
+                this.showToast("通知日が " + "平日のみ" +  " に設定されました");
                 break;
 
             case SettingFragment.DATE_TYPE_WEEKEND:
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKEND, getActivity());
+                this.showToast("通知日が " + "土日のみ" +  " に設定されました");
                 break;
 
             case SettingFragment.DATE_TYPE_ALLDAY:
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_ALLDAY, getActivity());
+                this.showToast("通知日が " + "毎日" +  " に設定されました");
                 break;
 
             default:
                 break;
         }
+
+        this.updateNextNotification();
+
+
     }
 
     @Override
@@ -262,15 +275,17 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
             case R.id.button_setting_end_time:
                 this.setLastClickButtonId(viewId);
-                this.showTimePickerDialog("Start Time", R.id.button_setting_end_time);
+                this.showTimePickerDialog("End Time", R.id.button_setting_end_time);
                 break;
 
             default:
                 break;
         }
-
     }
 
+    /*
+    Remember which button was pressed to show time picker dialog
+     */
     private void setLastClickButtonId(int buttonId)
     {
         this.mLastClickButtonId = buttonId;
@@ -328,12 +343,31 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         radioButton.setBackgroundResource(R.drawable.round_button_pale_green);
     }
 
-    private void UpdateNextNotification()
+    private void updateNextNotification()
     {
         Log.d(this.getClass().toString(), "UpdateNextNotification");
 
+        TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(this.getActivity());
+        TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
+
+        if(null == nextTrainData)
+        {
+            Log.d(this.getClass().toString(), "next train data not found");
+            return;
+        }
+
+        NotificationAlarmManager nAlarmManager = new NotificationAlarmManager(this.getActivity());
+        nAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
 
     }
+
+    private void showToast(String message)
+    {
+        Log.d(this.getClass().toString(), "showToast(" + message + "");
+
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
 
 
