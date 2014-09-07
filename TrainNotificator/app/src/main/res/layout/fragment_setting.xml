@@ -8,8 +8,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,43 +32,74 @@
             android:layout_height="fill_parent"
             android:layout_weight="1">
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="@string/label_setting_notification_default_start_time"
+                android:drawableLeft="@drawable/ic_action_alarms"
+                android:id="@+id/button_setting_start_time"
+                android:background="@drawable/round_green_button"
+                android:textColor="@color/white"
+                android:shadowColor="@color/gray"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:textSize="16pt"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textView2"
-                android:text="@string/label_setting_notification_start_time" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/label_setting_notification_default_start_time"
-                android:drawableLeft="@drawable/ic_action_alarms"
-                android:id="@+id/button_setting_start_time"
-                android:layout_margin="20dp" />
+                android:text="@string/label_setting_notification_start_time"
+                android:textSize="8pt"
+                android:textColor="@color/darkgray"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="@string/label_setting_notification_default_end_time"
+                android:drawableLeft="@drawable/ic_action_alarms"
+                android:background="@drawable/round_green_button"
+                android:id="@+id/button_setting_end_time"
+                android:textColor="@color/white"
+                android:shadowColor="@color/gray"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="5"
+                android:textSize="16pt"
+                android:layout_gravity="top"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textView3"
-                android:text="@string/label_setting_notification_end_time" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/label_setting_notification_default_end_time"
-                android:drawableLeft="@drawable/ic_action_alarms"
-                android:id="@+id/button_setting_end_time"
-                android:layout_margin="20dp" />
+                android:text="@string/label_setting_notification_end_time"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/darkgray"
+                android:textSize="8pt" />
         </LinearLayout>
 
     </LinearLayout>

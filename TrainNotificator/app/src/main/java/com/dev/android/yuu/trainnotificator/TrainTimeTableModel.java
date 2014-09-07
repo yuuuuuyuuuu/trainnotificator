@@ -57,6 +57,13 @@ public class TrainTimeTableModel
         return nextTrainData;
     }
 
+    public int GetTrainTimeDataNumber()
+    {
+        Log.d(this.getClass().toString(), "GetTrainTimeDataNumber");
+        return this.mWeekdayTrainTimeDataList.size();
+    }
+
+
     private TrainTimeData findNextTrainTime(int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "findNextTrainTime(" + hourOfDay + ", " + minute + ")");

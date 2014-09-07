@@ -37,8 +37,13 @@ public class TrainTimeTableManager
         TrainTimeData nextTrainTimeData = null;
         boolean isNextTrainTimeDataFound = false;
 
+        int timeDataNum = this.mTrainTimeTableModel.GetTrainTimeDataNumber();
+        int loopCounter = 0;
+
         while(!isNextTrainTimeDataFound)
         {
+            loopCounter++;
+
             TrainTimeData timeDataCandidate = this.mTrainTimeTableModel.GetNextTrainTime();
             boolean isStartTimeWithinRange = false;
             boolean isEndTimeWithinRange = false;
@@ -80,6 +85,12 @@ public class TrainTimeTableManager
 
                 nextTrainTimeData = timeDataCandidate;
                 isNextTrainTimeDataFound = true;
+                break;
+            }
+
+            if(timeDataNum <= loopCounter)
+            {
+                Log.d(this.getClass().toString(), "search all data -> break loop");
                 break;
             }
         }
