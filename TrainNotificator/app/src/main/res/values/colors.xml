@@ -5,6 +5,8 @@
     <color name="darkgray">#515151</color>
     <color name="white">#FFFFFF</color>
     <color name="almost_black">#222222</color>
-    <color name="pale_orange">#FFA500</color>
-    <color name="pale_green">#82FF82</color>
+    <color name="deep_orange">#FFA500</color>
+    <color name="pale_orange">#FFD68B</color>
+    <color name="deep_green">#13A513</color>
+    <color name="pale_green">#b8e4b8</color>
 </resources>

@@ -18,6 +18,9 @@
     <string name="label_notification_title">次の湘南新宿ライン</string>
     <string name="label_notification_message_prefix">次の湘南新宿ラインは</string>
     <string name="label_notification_message_suffix">です。</string>
+    <string name="label_setting_direction_title">方面の設定</string>
+    <string name="label_direction_shinjuku">新宿方面</string>
+    <string name="label_direction_ofuna">大船方面</string>
 
 
 </resources>
