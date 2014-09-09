@@ -42,9 +42,15 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private final static int DATE_TYPE_WEEKEND = 2;
     private final static int DATE_TYPE_ALLDAY = 3;
 
+    private boolean mIsCreateViewCompleted = false;
+
+    private TrainTimeTableManager mTrainTimeTableManager = null;
+    private NotificationAlarmManager mNotificationAlarmManager = null;
+
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
     {
+
         this.mView = inflator.inflate(R.layout.fragment_setting, container, false);
 
         this.setUiEventHandlers();
@@ -52,6 +58,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         this.setTimePickerDialog();
 
         this.setUserTime();
+
+        this.mIsCreateViewCompleted = true;
 
         return this.mView;
     }
@@ -218,17 +226,17 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         {
             case SettingFragment.DATE_TYPE_WEEKDAY:
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKDAY, getActivity());
-                this.showToast("通知日が " + "平日のみ" +  " に設定されました");
+                if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "平日のみ" +  " に設定されました");
                 break;
 
             case SettingFragment.DATE_TYPE_WEEKEND:
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKEND, getActivity());
-                this.showToast("通知日が " + "土日のみ" +  " に設定されました");
+                if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "土日のみ" +  " に設定されました");
                 break;
 
             case SettingFragment.DATE_TYPE_ALLDAY:
                 UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_ALLDAY, getActivity());
-                this.showToast("通知日が " + "毎日" +  " に設定されました");
+                if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "毎日" +  " に設定されました");
                 break;
 
             default:
@@ -347,8 +355,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d(this.getClass().toString(), "UpdateNextNotification");
 
-        TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(this.getActivity());
-        TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
+        if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
+        TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
 
         if(null == nextTrainData)
         {
@@ -356,9 +364,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             return;
         }
 
-        NotificationAlarmManager nAlarmManager = new NotificationAlarmManager(this.getActivity());
-        nAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
-
+        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
+        this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
 
     private void showToast(String message)

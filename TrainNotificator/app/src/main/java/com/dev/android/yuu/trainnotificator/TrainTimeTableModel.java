@@ -25,7 +25,7 @@ public class TrainTimeTableModel
     private static final String FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY = "timetable_sotetsu_ryokuen.txt";
 
 
-    public  TrainTimeTableModel(Context context)
+    public TrainTimeTableModel(Context context)
     {
         Log.d(this.getClass().toString(), "TrainTimeTableModel()");
 
