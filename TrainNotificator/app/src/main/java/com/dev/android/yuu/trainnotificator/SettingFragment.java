@@ -37,6 +37,9 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private RadioButton mRadioButtonWeekend = null;
     private RadioButton mRadioButtonAllday = null;
 
+    private RadioButton mRadioButtonDirection1 = null;
+    private RadioButton mRadioButtonDirection2 = null;
+
     // Date Type
     private final static int DATE_TYPE_WEEKDAY = 1;
     private final static int DATE_TYPE_WEEKEND = 2;
@@ -175,6 +178,12 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         this.mRadioButtonAllday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_allday);
         this.mRadioButtonAllday.setOnCheckedChangeListener(this);
+
+        this.mRadioButtonDirection1 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction1);
+        this.mRadioButtonDirection1.setOnCheckedChangeListener(this);
+
+        this.mRadioButtonDirection2 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction2);
+        this.mRadioButtonDirection2.setOnCheckedChangeListener(this);
     }
 
     private void showTimePickerDialog(String title, int hourOfDay, int minute)
@@ -348,14 +357,48 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d(this.getClass().toString(), "setSelectedStyle");
 
-        radioButton.setBackgroundResource(R.drawable.round_green_button);
+        int id = radioButton.getId();
+
+        if(R.id.radiobutton_setting_weekday == id
+                || R.id.radiobutton_setting_weekend == id
+                || R.id.radiobutton_setting_allday == id)
+        {
+            radioButton.setBackgroundResource(R.drawable.round_green_button);
+        }
+        else if(R.id.radioButton_direction1 == id || R.id.radioButton_direction2 == id)
+        {
+            radioButton.setBackgroundResource(R.drawable.round_orange_button);
+        }
+        else
+        {
+            Log.e(this.getClass().toString(), "Unexpected radio button");
+        }
+
+
     }
 
     private void setUnselectedStyle(RadioButton radioButton)
     {
         Log.d(this.getClass().toString(), "setUnselectedStyle");
 
-        radioButton.setBackgroundResource(R.drawable.round_button_pale_green);
+        int id = radioButton.getId();
+
+        if(R.id.radiobutton_setting_weekday == id
+                || R.id.radiobutton_setting_weekend == id
+                || R.id.radiobutton_setting_allday == id)
+        {
+            radioButton.setBackgroundResource(R.drawable.round_button_pale_green);
+        }
+        else if(R.id.radioButton_direction1 == id || R.id.radioButton_direction2 == id)
+        {
+            radioButton.setBackgroundResource(R.drawable.round_button_pale_orange);
+        }
+        else
+        {
+            Log.e(this.getClass().toString(), "Unexpected radio button");
+        }
+
+
     }
 
     private void updateNextNotification()
