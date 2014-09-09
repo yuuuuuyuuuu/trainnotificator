@@ -66,6 +66,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
     private void setUserTime()
     {
+        Log.d(this.getClass().toString(), "setUserTime");
+
         int[] startTime = UserDataManager.GetStartTime(getActivity());
         int[] endTime = UserDataManager.GetEndTime(getActivity());
 
@@ -175,13 +177,14 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         this.mRadioButtonAllday.setOnCheckedChangeListener(this);
     }
 
-    private void showTimePickerDialog(String title, int originButtonId)
+    private void showTimePickerDialog(String title, int hourOfDay, int minute)
     {
         if(null == this.mTimePickerDialog)
         {
             Log.e("showTimePickerDialog", "this.mTimePickerDialog is null");
         }
 
+        this.mTimePickerDialog.updateTime(hourOfDay, minute);
         this.mTimePickerDialog.setTitle(title);
         this.mTimePickerDialog.show();
     }
@@ -274,16 +277,20 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         int viewId = view.getId();
 
+        int[] startTime = UserDataManager.GetStartTime(getActivity());
+        int[] endTime = UserDataManager.GetEndTime(getActivity());
+
         switch (viewId)
         {
             case R.id.button_setting_start_time:
                 this.setLastClickButtonId(viewId);
-                this.showTimePickerDialog("Start Time", R.id.button_setting_start_time);
+
+                this.showTimePickerDialog("Start Time", startTime[0], startTime[1]);
                 break;
 
             case R.id.button_setting_end_time:
                 this.setLastClickButtonId(viewId);
-                this.showTimePickerDialog("End Time", R.id.button_setting_end_time);
+                this.showTimePickerDialog("End Time", endTime[0], endTime[1]);
                 break;
 
             default:
@@ -353,7 +360,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
     private void updateNextNotification()
     {
-        Log.d(this.getClass().toString(), "UpdateNextNotification");
+        Log.d(this.getClass().toString(), "updateNextNotification");
 
         if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();

@@ -39,7 +39,9 @@ public class TrainTimeTableManager
 
         int timeDataNum = this.mTrainTimeTableModel.GetTrainTimeDataNumber();
         int loopCounter = 0;
-        int loopMax = 2000;
+        int loopMax = timeDataNum;
+
+        Log.d(this.getClass().toString(), "timeDataNum: " + timeDataNum);
 
         while(!isNextTrainTimeDataFound)
         {
