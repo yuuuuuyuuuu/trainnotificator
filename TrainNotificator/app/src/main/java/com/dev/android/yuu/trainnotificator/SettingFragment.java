@@ -265,19 +265,29 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d("onTimeSet", "Set to " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
 
+        boolean isTimeChanged = false;
+
         switch (this.mLastClickButtonId)
         {
             case R.id.button_setting_start_time:
                 this.setStartTime(hourOfDay, minute);
+                isTimeChanged = true;
                 break;
 
             case R.id.button_setting_end_time:
                 this.setEndTime(hourOfDay, minute);
+                isTimeChanged = true;
                 break;
 
             default:
                 this.mLastClickButtonId = -1;
                 break;
+        }
+
+        if(isTimeChanged)
+        {
+            Log.d(this.getClass().toString(), "Launch new notification since user time changed.");
+
         }
     }
 
@@ -397,8 +407,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         {
             Log.e(this.getClass().toString(), "Unexpected radio button");
         }
-
-
     }
 
     private void updateNextNotification()
@@ -415,6 +423,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
 
         if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
+        this.mNotificationAlarmManager.LaunchNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
         this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
 
@@ -424,8 +433,4 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 }

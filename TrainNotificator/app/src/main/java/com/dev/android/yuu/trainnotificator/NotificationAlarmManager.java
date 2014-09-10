@@ -69,11 +69,45 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         // Setting train time data
         Intent intent = new Intent(context, NotificationAlarmManager.class);
-        intent.setData(Uri.parse("custom//" + System.currentTimeMillis()));
+        //intent.setData(Uri.parse("custom//" + System.currentTimeMillis()));
         PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
+    }
+
+    public void LaunchNotification(Context context, int hourOfDay, int minute)
+    {
+        Log.d(this.getClass().toString(), "LaunchNotification(" + hourOfDay + "," + minute + ")");
+
+        Intent i = new Intent(context, MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Create notification
+        String hourOfDayString = String.valueOf(hourOfDay);
+        String minuteString = String.valueOf(minute);
+        if(minute < 10)
+        {
+            minuteString = "0" + minuteString;
+        }
+
+        Resources res = this.mContext.getResources();
+        String notificationTitle = res.getString(R.string.label_notification_title);
+        String notificationTicker = res.getString(R.string.label_notification_message_prefix) + hourOfDayString + ":" + minuteString + res.getString(R.string.label_notification_message_suffix);
+        String notificationContent = notificationTicker;
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setContentIntent(pIntent);
+        builder.setTicker(notificationTicker);
+        builder.setContentTitle(notificationTitle);
+        builder.setContentText(notificationContent);
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setAutoCancel(true);
+        builder.setWhen(Calendar.getInstance().getTimeInMillis());
+
+        this.mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        this.mNotificationManager.cancel(0);
+        this.mNotificationManager.notify(0, builder.build());
     }
 
     @Override
@@ -93,46 +127,10 @@ public class NotificationAlarmManager extends BroadcastReceiver
             return;
         }
 
-        // Create notification
-        Intent i = new Intent(context, MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        // launch now to notice next train time
+        this.LaunchNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
 
-        String hourOfDayString = String.valueOf(nextTrainData.HourOfDay());
-        String minuteString = String.valueOf(nextTrainData.Minute());
-        if(nextTrainData.Minute() < 10)
-        {
-            minuteString = "0" + minuteString;
-        }
-
-        Resources res = this.mContext.getResources();
-        String notificationTitle = res.getString(R.string.label_notification_title);
-        String notificationTicker = res.getString(R.string.label_notification_message_prefix) + hourOfDayString + ":" + minuteString + res.getString(R.string.label_notification_message_suffix);
-        String notificationContent = notificationTicker;
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentIntent(pIntent);
-        builder.setTicker(notificationTicker);
-        builder.setContentTitle(notificationTitle);
-        builder.setContentText(notificationContent);
-        builder.setSmallIcon(R.drawable.ic_launcher);
-        builder.setAutoCancel(true);
-
-        this.mNotificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        this.mNotificationManager.notify(0, builder.build());
-
+        // set following notification to update train time
         this.SetNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
-
-    }
-
-    private void LaunchNotification(NotificationCompat.Builder builder)
-    {
-        Log.d(this.getClass().toString(), "LaunchNotification");
-
-        if(null == this.mNotificationManager)
-        {
-            this.mNotificationManager = (NotificationManager)this.mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-
-        this.mNotificationManager.notify(0, builder.build());
     }
 }
