@@ -15,6 +15,7 @@ public class UserDataManager {
     private static String DATA_KEY_END_HOUR_OF_DAY = "end_hour_of_day";
     private static String DATA_KEY_END_MINUTE = "end_minute";
     private static String DATA_KEY_DATE_TYPE = "date";
+    private static String DATA_KEY_DIRECTION_TYPE = "direction";
 
     private static SharedPreferences LoadSharedPreference(Context context)
     {
@@ -61,6 +62,16 @@ public class UserDataManager {
         return dateType;
     }
 
+    public static int GetDirectionType(Context context)
+    {
+        int directionType = 0;
+
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+        directionType = sp.getInt(UserDataManager.DATA_KEY_DIRECTION_TYPE, -1);
+
+        return directionType;
+    }
+
     public static void SaveStartTime(int hourOfDay, int minute, Context context)
     {
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
@@ -92,4 +103,15 @@ public class UserDataManager {
 
         editor.commit();
     }
+
+    public static void SaveDirectionType(int directionType, Context context)
+    {
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(UserDataManager.DATA_KEY_DIRECTION_TYPE, directionType);
+
+        editor.commit();
+    }
+
 }

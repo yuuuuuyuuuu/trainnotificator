@@ -164,8 +164,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
                 break;
 
         }
-
-
     }
 
     private void setTimePickerDialog()
@@ -242,7 +240,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         this.updateNextNotification();
 
-        this.showToast("通知修了時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
+        this.showToast("通知終了時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
 
     private void setDateType(int dateType)
