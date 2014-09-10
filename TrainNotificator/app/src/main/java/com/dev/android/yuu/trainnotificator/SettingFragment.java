@@ -45,6 +45,10 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private final static int DATE_TYPE_WEEKEND = 2;
     private final static int DATE_TYPE_ALLDAY = 3;
 
+    // Direction Type
+    private final static int DIRECTION_TYPE_1 = 1;
+    private final static int DIRECTION_TYPE_2 = 2;
+
     private boolean mIsCreateViewCompleted = false;
 
     private TrainTimeTableManager mTrainTimeTableManager = null;
@@ -53,7 +57,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
     {
-
         this.mView = inflator.inflate(R.layout.fragment_setting, container, false);
 
         this.setUiEventHandlers();
@@ -127,6 +130,16 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
 
         this.setDateTypeCheck(dateType);
+
+        // Direction
+        int directionType = UserDataManager.GetDirectionType(getActivity());
+        if(-1 == directionType)
+        {
+            Log.d("setUserTime", "setting default direction type");
+            directionType = this.DIRECTION_TYPE_1;
+        }
+
+        this.setDirectionType(directionType);
 
     }
 
@@ -269,6 +282,32 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         this.updateNextNotification();
     }
 
+    private void setDirectionType(int directionType)
+    {
+        switch (directionType)
+        {
+            case SettingFragment.DIRECTION_TYPE_1:
+                UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_1, getActivity());
+                if(this.mIsCreateViewCompleted) this.showToast("方面が " + "新宿方面" +  " に設定されました");
+                this.setSelectedStyle(this.mRadioButtonDirection1);
+                this.mRadioButtonDirection1.setChecked(true);
+                break;
+
+            case SettingFragment.DIRECTION_TYPE_2:
+                UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_2, getActivity());
+                if(this.mIsCreateViewCompleted) this.showToast("方面が " + "大船方面" +  " に設定されました");
+                this.setSelectedStyle(this.mRadioButtonDirection2);
+                this.mRadioButtonDirection2.setChecked(true);
+                break;
+
+            default:
+                break;
+        }
+
+        this.updateNextNotification();
+    }
+
+
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute)
     {
@@ -365,6 +404,14 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
             case R.id.radiobutton_setting_allday:
                 this.setDateType(SettingFragment.DATE_TYPE_ALLDAY);
+                break;
+
+            case R.id.radioButton_direction1:
+                this.setDirectionType(SettingFragment.DIRECTION_TYPE_1);
+                break;
+
+            case R.id.radioButton_direction2:
+                this.setDirectionType(SettingFragment.DIRECTION_TYPE_2);
                 break;
 
             default:
