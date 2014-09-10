@@ -123,12 +123,11 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         if(-1 == dateType)
         {
             Log.d("setUserTime", "setting default date type");
-            this.mRadioButtonWeekday.setChecked(true);
+            dateType = this.DATE_TYPE_WEEKDAY;
         }
-        else
-        {
-            this.setDateTypeCheck(dateType);
-        }
+
+        this.setDateTypeCheck(dateType);
+
     }
 
     private void setDateTypeCheck(int dateType)
@@ -139,20 +138,34 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         {
             case SettingFragment.DATE_TYPE_WEEKDAY:
                 this.mRadioButtonWeekday.setChecked(true);
+                if(!this.mIsCreateViewCompleted)
+                {
+                    this.setSelectedStyle(this.mRadioButtonWeekday);
+                }
                 break;
 
             case SettingFragment.DATE_TYPE_WEEKEND:
                 this.mRadioButtonWeekend.setChecked(true);
+                if(!this.mIsCreateViewCompleted)
+                {
+                    this.setSelectedStyle(this.mRadioButtonWeekend);
+                }
                 break;
 
             case SettingFragment.DATE_TYPE_ALLDAY:
                 this.mRadioButtonAllday.setChecked(true);
+                if(!this.mIsCreateViewCompleted)
+                {
+                    this.setSelectedStyle(this.mRadioButtonAllday);
+                }
                 break;
 
             default:
                 break;
 
         }
+
+
     }
 
     private void setTimePickerDialog()
@@ -256,8 +269,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
 
         this.updateNextNotification();
-
-
     }
 
     @Override
@@ -383,8 +394,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         {
             Log.e(this.getClass().toString(), "Unexpected radio button");
         }
-
-
     }
 
     private void setUnselectedStyle(RadioButton radioButton)

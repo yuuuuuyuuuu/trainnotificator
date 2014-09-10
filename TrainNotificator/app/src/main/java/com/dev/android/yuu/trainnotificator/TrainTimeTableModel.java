@@ -121,7 +121,7 @@ public class TrainTimeTableModel
 
         try
         {
-            is = am.open(FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY);
+            is = am.open(FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY);
         }
         catch (IOException e)
         {
