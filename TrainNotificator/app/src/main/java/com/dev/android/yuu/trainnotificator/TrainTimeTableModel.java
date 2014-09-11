@@ -21,9 +21,16 @@ public class TrainTimeTableModel
     private ArrayList<TrainTimeData> mWeekdayTrainTimeDataList = null;
     private ArrayList<TrainTimeData> mWeekendTrainTimeDataList = null;
 
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY = "timetable_shonanshinjukuline_weekday.txt";
-    private static final String FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY = "timetable_sotetsu_ryokuen.txt";
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU = "timetable_shonanshinjukuline_weekday_shinjyuku_direction.txt";
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_SHINJUKU = "timetable_shonanshinjukuline_saturday_shinjyuku_direction.txt";
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_SHINJUKU = "timetable_shonanshinjukuline_holiday_shinjyuku_direction.txt";
 
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_OFUNA = "timetable_shonanshinjukuline_weekday_ofuna_direction.txt";
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_OFUNA = "timetable_shonanshinjukuline_saturday_ofuna_direction.txt";
+    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_OFUNA = "timetable_shonanshinjukuline_holiday_ofuna_direction.txt";
+
+    /* test */
+    private static final String FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY = "timetable_sotetsu_ryokuen.txt";
 
     public TrainTimeTableModel(Context context)
     {
@@ -119,9 +126,12 @@ public class TrainTimeTableModel
 
         InputStream is = null;
 
+        int directionType = UserDataManager.GetDirectionType(this.mContext);
+        String dataTableFileName = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU;
+
         try
         {
-            is = am.open(FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY);
+            is = am.open(dataTableFileName);
         }
         catch (IOException e)
         {
