@@ -41,13 +41,13 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private RadioButton mRadioButtonDirection2 = null;
 
     // Date Type
-    private final static int DATE_TYPE_WEEKDAY = 1;
-    private final static int DATE_TYPE_WEEKEND = 2;
-    private final static int DATE_TYPE_ALLDAY = 3;
+    public final static int DATE_TYPE_WEEKDAY = 1;
+    public final static int DATE_TYPE_WEEKEND = 2;
+    public final static int DATE_TYPE_ALLDAY = 3;
 
     // Direction Type
-    private final static int DIRECTION_TYPE_1 = 1;
-    private final static int DIRECTION_TYPE_2 = 2;
+    public final static int DIRECTION_TYPE_1 = 1;
+    public final static int DIRECTION_TYPE_2 = 2;
 
     private boolean mIsCreateViewCompleted = false;
 
@@ -141,6 +141,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         this.setDirectionType(directionType);
 
+        this.launchNotification();
     }
 
     private void setDateTypeCheck(int dateType)
@@ -234,7 +235,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         String label = String.valueOf(hourOfDay) + ":" + minuteString;
         this.mButtonSetStartTime.setText(label);
 
-        this.updateNextNotification();
+        this.updateNextNotification(false);
 
         this.showToast("通知開始時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
@@ -251,7 +252,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         String label = String.valueOf(hourOfDay) + ":" + minuteString;
         this.mButtonSetEndTime.setText(label);
 
-        this.updateNextNotification();
+        this.updateNextNotification(false);
 
         this.showToast("通知終了時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
@@ -279,32 +280,34 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
                 break;
         }
 
-        this.updateNextNotification();
+        this.updateNextNotification(true);
     }
 
     private void setDirectionType(int directionType)
     {
+        Resources res = getResources();
+
         switch (directionType)
         {
             case SettingFragment.DIRECTION_TYPE_1:
                 UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_1, getActivity());
-                if(this.mIsCreateViewCompleted) this.showToast("方面が " + "新宿方面" +  " に設定されました");
+                if(this.mIsCreateViewCompleted) this.showToast("方面が " + res.getString(R.string.name_direction1) +  " 方面に設定されました");
                 this.setSelectedStyle(this.mRadioButtonDirection1);
-                this.mRadioButtonDirection1.setChecked(true);
+                if(!this.mIsCreateViewCompleted) this.mRadioButtonDirection1.setChecked(true);
                 break;
 
             case SettingFragment.DIRECTION_TYPE_2:
                 UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_2, getActivity());
-                if(this.mIsCreateViewCompleted) this.showToast("方面が " + "大船方面" +  " に設定されました");
+                if(this.mIsCreateViewCompleted) this.showToast("方面が " + res.getString(R.string.name_direction1) +  " 方面に設定されました");
                 this.setSelectedStyle(this.mRadioButtonDirection2);
-                this.mRadioButtonDirection2.setChecked(true);
+                if(!this.mIsCreateViewCompleted) this.mRadioButtonDirection2.setChecked(true);
                 break;
 
             default:
                 break;
         }
 
-        this.updateNextNotification();
+        this.updateNextNotification(true);
     }
 
 
@@ -335,7 +338,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         if(isTimeChanged)
         {
             Log.d(this.getClass().toString(), "Launch new notification since user time changed.");
-
+            this.launchNotification();
         }
     }
 
@@ -417,6 +420,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             default:
                 break;
         }
+
+        this.launchNotification();
     }
 
     private void setSelectedStyle(RadioButton radioButton)
@@ -463,9 +468,31 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
     }
 
-    private void updateNextNotification()
+    private void updateNextNotification(boolean needForceUpdate)
     {
-        Log.d(this.getClass().toString(), "updateNextNotification");
+        Log.d(this.getClass().toString(), "updateNextNotification(" + needForceUpdate + ")");
+
+        if(needForceUpdate || null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
+        TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
+
+        if(null == nextTrainData)
+        {
+            Log.d(this.getClass().toString(), "next train data not found");
+            return;
+        }
+
+        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
+        //this.mNotificationAlarmManager.LaunchNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
+
+        this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
+
+        // notify main activity
+        ((MainActivity)this.getActivity()).trainInfoUpdated();
+    }
+
+    private void launchNotification()
+    {
+        Log.d(this.getClass().toString(), "launchNotification");
 
         if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
@@ -478,7 +505,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
         this.mNotificationAlarmManager.LaunchNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
-        this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
 
     private void showToast(String message)

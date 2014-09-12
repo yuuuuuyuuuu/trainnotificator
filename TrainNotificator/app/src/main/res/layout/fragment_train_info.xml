@@ -10,12 +10,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/label_traininfo_title"
-        android:id="@+id/textView"
+        android:id="@+id/textView_traininfo_title"
         android:textColor="@color/white"
         android:shadowColor="@color/gray"
         android:shadowDx="3"
         android:shadowDy="3"
-        android:shadowRadius="3"/>
+        android:shadowRadius="3"
+        android:textSize="12pt" />
 
     <TextView
         android:id="@+id/textView_trainInfo"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/label_traininfo_traintime"
         android:layout_gravity="center"
-        android:textSize="32pt"
+        android:textSize="52pt"
         android:textColor="@color/white"
         android:shadowColor="@color/gray"
         android:shadowDx="5"

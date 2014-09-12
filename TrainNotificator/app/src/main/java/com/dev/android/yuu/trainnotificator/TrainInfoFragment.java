@@ -1,6 +1,7 @@
 package com.dev.android.yuu.trainnotificator;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -19,6 +20,7 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
 
     private View view = null;
     private TextView mTextViewTrainInfo = null;
+    private TextView mTextViewTrainInfoTitle = null;
 
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
@@ -37,6 +39,15 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         Log.d(this.getClass().toString(), "onResume");
         super.onResume();
 
+        this.updateTrainInfo();
+    }
+
+    public void updateTrainInfo()
+    {
+        Log.d(this.getClass().toString(), "updateTrainInfo");
+
+        Resources res = getResources();
+
         // Update train information
         TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(this.getActivity());
         TrainTimeData nextTrainTimeData = trainTimeTableManager.FindNextTrainData();
@@ -45,12 +56,43 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         if(nextTrainTimeData.Minute() < 10) minuteString = "0" + minuteString;
 
         String trainInfoLabel = nextTrainTimeData.HourOfDay() + ":" + minuteString;
-        this.mTextViewTrainInfo.setText(trainInfoLabel);
+        this.setTrainInfoLabel(trainInfoLabel);
+
+        int directionType = UserDataManager.GetDirectionType(this.getActivity());
+        String trainInfoTitle = "次の";
+
+        if(directionType == SettingFragment.DIRECTION_TYPE_1)
+        {
+            trainInfoTitle += res.getString(R.string.name_direction1);
+        }
+        else if(directionType == SettingFragment.DIRECTION_TYPE_2)
+        {
+            trainInfoTitle += res.getString(R.string.name_direction2);
+        }
+        else
+        {
+            Log.e(this.getClass().toString(), "directiooType NOT set unexpectedly");
+        }
+
+        trainInfoTitle += " 方面は";
+        this.setTrainInfoTitle(trainInfoTitle);
+    }
+
+
+    private void setTrainInfoLabel(String text)
+    {
+        this.mTextViewTrainInfo.setText(text);
+    }
+
+    private void setTrainInfoTitle(String text)
+    {
+        this.mTextViewTrainInfoTitle.setText(text);
     }
 
     private void setUiEventHandlers()
     {
         this.mTextViewTrainInfo = (TextView)this.view.findViewById(R.id.textView_trainInfo);
+        this.mTextViewTrainInfoTitle = (TextView)this.view.findViewById(R.id.textView_traininfo_title);
     }
 
     @Override

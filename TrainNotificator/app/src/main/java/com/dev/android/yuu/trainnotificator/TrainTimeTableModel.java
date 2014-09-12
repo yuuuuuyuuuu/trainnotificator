@@ -2,7 +2,10 @@ package com.dev.android.yuu.trainnotificator;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.util.Log;
+
+import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,14 +23,6 @@ public class TrainTimeTableModel
 
     private ArrayList<TrainTimeData> mWeekdayTrainTimeDataList = null;
     private ArrayList<TrainTimeData> mWeekendTrainTimeDataList = null;
-
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU = "timetable_shonanshinjukuline_weekday_shinjyuku_direction.txt";
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_SHINJUKU = "timetable_shonanshinjukuline_saturday_shinjyuku_direction.txt";
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_SHINJUKU = "timetable_shonanshinjukuline_holiday_shinjyuku_direction.txt";
-
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_OFUNA = "timetable_shonanshinjukuline_weekday_ofuna_direction.txt";
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_OFUNA = "timetable_shonanshinjukuline_saturday_ofuna_direction.txt";
-    private static final String FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_OFUNA = "timetable_shonanshinjukuline_holiday_ofuna_direction.txt";
 
     /* test */
     private static final String FILENAME_TIMETABLE_SOTESTU_RYOKUENTOSHI_WEEKDAY = "timetable_sotetsu_ryokuen.txt";
@@ -50,7 +45,14 @@ public class TrainTimeTableModel
         int minute = calendar.get(Calendar.MINUTE);
 
         TrainTimeData nextTrainData = this.findNextTrainTime(hourOfDay, minute);
-        Log.d(this.getClass().toString(), "nextTrainData hourOfDay:" + nextTrainData.HourOfDay() + "  minute:" + nextTrainData.Minute());
+        if(null == nextTrainData)
+        {
+            Log.d(this.getClass().toString(), "nextTrainData is null");
+        }
+        else
+        {
+            Log.d(this.getClass().toString(), "nextTrainData hourOfDay:" + nextTrainData.HourOfDay() + "  minute:" + nextTrainData.Minute());
+        }
 
         return nextTrainData;
     }
@@ -110,7 +112,8 @@ public class TrainTimeTableModel
 
         if(null == nextTrainTimeData)
         {
-            Log.d(this.getClass().toString(), "next data NOT found.");
+            Log.d(this.getClass().toString(), "next data NOT found. Setting first train data");
+            nextTrainTimeData = this.mWeekdayTrainTimeDataList.get(0);
         }
 
         return nextTrainTimeData;
@@ -126,8 +129,8 @@ public class TrainTimeTableModel
 
         InputStream is = null;
 
-        int directionType = UserDataManager.GetDirectionType(this.mContext);
-        String dataTableFileName = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU;
+        String dataTableFileName = this.getTableDataFile();
+        Log.d(this.getClass().toString(), "time table file: " + dataTableFileName);
 
         try
         {
@@ -226,6 +229,74 @@ public class TrainTimeTableModel
 
         return minuteArray;
     }
+
+    private String getTableDataFile()
+    {
+        Log.d(this.getClass().toString(), "getTableDataFile");
+
+        String filename = "";
+
+        int currentDay = CalendarUtility.GetCurrentDay();
+        int directionType = UserDataManager.GetDirectionType(this.mContext);
+
+        Log.d(this.getClass().toString(), "currentDay:" + currentDay);
+
+        Resources res = this.mContext.getResources();
+
+        switch (currentDay)
+        {
+            case Calendar.SUNDAY:
+                if(SettingFragment.DIRECTION_TYPE_1 == directionType)
+                {
+                    // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_SHINJUKU;
+                    filename = res.getString(R.string.file_timetable_direction1_holiday);
+                }
+                else
+                {
+                    // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_OFUNA;
+                    filename = res.getString(R.string.file_timetable_direction2_holiday);
+                }
+                break;
+
+            case Calendar.SATURDAY:
+                if(SettingFragment.DIRECTION_TYPE_1 == directionType)
+                {
+                    // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_SHINJUKU;
+                    filename = res.getString(R.string.file_timetable_direction1_saturday);
+                }
+                else
+                {
+                    //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_OFUNA;
+                    filename = res.getString(R.string.file_timetable_direction2_saturday);
+                }
+                break;
+
+            case Calendar.MONDAY:
+            case Calendar.TUESDAY:
+            case Calendar.WEDNESDAY:
+            case Calendar.THURSDAY:
+            case Calendar.FRIDAY:
+                if(SettingFragment.DIRECTION_TYPE_1 == directionType)
+                {
+                    //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU;
+                    filename = res.getString(R.string.file_timetable_direction1_weekday);
+                }
+                else
+                {
+                    //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_OFUNA;
+                    filename = res.getString(R.string.file_timetable_direction2_weekday);
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        Log.d(this.getClass().toString(), "filename: " + filename);
+
+        return  filename;
+    }
+
 
 
 }

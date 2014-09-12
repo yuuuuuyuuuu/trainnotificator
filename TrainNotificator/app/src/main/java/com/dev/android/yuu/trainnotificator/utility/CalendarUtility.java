@@ -12,6 +12,14 @@ public class CalendarUtility
 {
     private static final String TAG = "CalendarUtility";
 
+    public static int GetCurrentDay()
+    {
+        Log.d(CalendarUtility.TAG, "GetCurrentHourOfDay()");
+        Calendar calendar = Calendar.getInstance();
+
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
     public static int GetCurrentHourOfDay()
     {
         Log.d(CalendarUtility.TAG, "GetCurrentHourOfDay()");

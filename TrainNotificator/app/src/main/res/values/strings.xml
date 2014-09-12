@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TrainNotificator</string>
+    <string name="app_name">横浜発 湘南新宿ライン</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="label_setting_title">通知時間の設定</string>
@@ -13,7 +13,7 @@
     <string name="label_setting_date_weekday">平日のみ</string>
     <string name="label_setting_date_weekend">土日のみ</string>
     <string name="label_setting_date_allday">毎日</string>
-    <string name="label_traininfo_traintime">データがありません</string>
+    <string name="label_traininfo_traintime">00:00</string>
     <string name="label_traininfo_title">次の電車は</string>
     <string name="label_notification_title">次の湘南新宿ライン</string>
     <string name="label_notification_message_prefix">次の湘南新宿ラインは</string>

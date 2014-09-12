@@ -3,12 +3,14 @@ package com.dev.android.yuu.trainnotificator;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,16 +19,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.view.Window;
 
 
-
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity implements FragmentUpdateListener{
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         this.mNotificationAlarmManager = new NotificationAlarmManager(this);
@@ -40,11 +43,10 @@ public class MainActivity extends Activity {
         */
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        // getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -58,6 +60,16 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void trainInfoUpdated()
+    {
+        Log.d(this.getClass().toString(), "trainInfoUpdated");
+
+        FragmentManager fm = getFragmentManager();
+        TrainInfoFragment fragment = (TrainInfoFragment)fm.findFragmentById(R.id.traininfo_fragment);
+        fragment.updateTrainInfo();
     }
 
     /**

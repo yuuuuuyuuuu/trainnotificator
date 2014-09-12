@@ -10,6 +10,8 @@ import android.content.res.Resources;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
+
 import java.util.Calendar;
 
 /**
@@ -64,7 +66,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         // Setting train time data
         Intent intent = new Intent(context, NotificationAlarmManager.class);
-        //intent.setData(Uri.parse("custom//" + System.currentTimeMillis()));
         PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -123,7 +124,30 @@ public class NotificationAlarmManager extends BroadcastReceiver
         }
 
         // launch now to notice next train time
-        this.LaunchNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
+        int userDateType = UserDataManager.GetDateType(context);
+        int todaysDay = CalendarUtility.GetCurrentDay();
+        boolean canNotify = false;
+        if(SettingFragment.DATE_TYPE_WEEKDAY == userDateType)
+        {
+            if(Calendar.SATURDAY != todaysDay && Calendar.SUNDAY != todaysDay)
+            {
+                // OK to notify
+                canNotify = true;
+            }
+        }
+        else if(SettingFragment.DATE_TYPE_WEEKEND == userDateType)
+        {
+            if(Calendar.SATURDAY == todaysDay || Calendar.SUNDAY == todaysDay)
+            {
+                canNotify = true;
+            }
+        }
+        else if(SettingFragment.DATE_TYPE_ALLDAY == userDateType)
+        {
+            canNotify = true;
+        }
+
+        if(canNotify) this.LaunchNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
 
         // set following notification to update train time
         this.SetNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
