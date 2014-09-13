@@ -352,17 +352,19 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         int[] startTime = UserDataManager.GetStartTime(getActivity());
         int[] endTime = UserDataManager.GetEndTime(getActivity());
 
+        Resources res = getResources();
+
         switch (viewId)
         {
             case R.id.button_setting_start_time:
                 this.setLastClickButtonId(viewId);
 
-                this.showTimePickerDialog("Start Time", startTime[0], startTime[1]);
+                this.showTimePickerDialog(res.getString(R.string.label_setting_starttime_title), startTime[0], startTime[1]);
                 break;
 
             case R.id.button_setting_end_time:
                 this.setLastClickButtonId(viewId);
-                this.showTimePickerDialog("End Time", endTime[0], endTime[1]);
+                this.showTimePickerDialog(res.getString(R.string.label_setting_endtime_title), endTime[0], endTime[1]);
                 break;
 
             default:

@@ -294,6 +294,9 @@ public class TrainTimeTableModel
 
         Log.d(this.getClass().toString(), "filename: " + filename);
 
+        /*test */
+        //filename = "timetable_sotetsu_ryokuen.txt";
+
         return  filename;
     }
 

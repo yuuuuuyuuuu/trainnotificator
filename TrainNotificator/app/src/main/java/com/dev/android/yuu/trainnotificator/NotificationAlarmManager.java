@@ -62,7 +62,7 @@ public class NotificationAlarmManager extends BroadcastReceiver
         calendar.set(Calendar.MINUTE, minute);
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
 
-        // calendar.add(Calendar.SECOND, 5);
+        calendar.set(Calendar.SECOND, 0);
 
         // Setting train time data
         Intent intent = new Intent(context, NotificationAlarmManager.class);
