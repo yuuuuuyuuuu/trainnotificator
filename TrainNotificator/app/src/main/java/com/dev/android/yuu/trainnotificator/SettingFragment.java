@@ -484,7 +484,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
 
         if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
-        //this.mNotificationAlarmManager.LaunchNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
 
         this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
 

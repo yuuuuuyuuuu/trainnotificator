@@ -3,6 +3,7 @@
     <string name="name_target_station">横浜</string>
     <string name="name_direction1">新宿</string>
     <string name="name_direction2">大船</string>
+    <string name="name_line">湘南新宿ライン</string>
     <string name="file_timetable_direction1_weekday">timetable_shonanshinjukuline_weekday_shinjyuku_direction.txt</string>
     <string name="file_timetable_direction1_saturday">timetable_shonanshinjukuline_saturday_shinjyuku_direction.txt</string>
     <string name="file_timetable_direction1_holiday">timetable_shonanshinjukuline_holiday_shinjyuku_direction.txt</string>

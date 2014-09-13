@@ -88,7 +88,19 @@ public class NotificationAlarmManager extends BroadcastReceiver
         }
 
         Resources res = this.mContext.getResources();
-        String notificationTitle = res.getString(R.string.label_notification_title);
+        String notificationTitle = res.getString(R.string.name_target_station) + "発 ";
+        int dayType = UserDataManager.GetDirectionType(this.mContext);
+        if(dayType == SettingFragment.DIRECTION_TYPE_1)
+        {
+            notificationTitle += res.getString(R.string.name_direction1);
+        }
+        else if(dayType == SettingFragment.DIRECTION_TYPE_2)
+        {
+            notificationTitle += res.getString(R.string.name_direction2);
+        }
+
+        notificationTitle += "方面 " + res.getString(R.string.name_line);
+
         String notificationTicker = res.getString(R.string.label_notification_message_prefix) + hourOfDayString + ":" + minuteString + res.getString(R.string.label_notification_message_suffix);
         String notificationContent = notificationTicker;
 
