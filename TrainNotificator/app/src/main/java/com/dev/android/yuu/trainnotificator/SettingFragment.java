@@ -16,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
+
 import java.net.UnknownServiceException;
 
 /**
@@ -493,6 +495,13 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private void launchNotification()
     {
         Log.d(this.getClass().toString(), "launchNotification");
+
+        boolean isNowInUserPreference = CalendarUtility.IsNowInUserPreferenceTime(this.getActivity());
+        if(!isNowInUserPreference)
+        {
+            Log.d(this.getClass().toString(), "It is NOT time to launch notification.");
+            return;
+        }
 
         if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
