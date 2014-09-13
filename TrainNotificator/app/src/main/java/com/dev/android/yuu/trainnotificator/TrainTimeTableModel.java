@@ -246,7 +246,7 @@ public class TrainTimeTableModel
         switch (currentDay)
         {
             case Calendar.SUNDAY:
-                if(SettingFragment.DIRECTION_TYPE_1 == directionType)
+                if(Constants.DIRECTION_TYPE_1 == directionType)
                 {
                     // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_SHINJUKU;
                     filename = res.getString(R.string.file_timetable_direction1_holiday);
@@ -259,7 +259,7 @@ public class TrainTimeTableModel
                 break;
 
             case Calendar.SATURDAY:
-                if(SettingFragment.DIRECTION_TYPE_1 == directionType)
+                if(Constants.DIRECTION_TYPE_1 == directionType)
                 {
                     // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_SHINJUKU;
                     filename = res.getString(R.string.file_timetable_direction1_saturday);
@@ -276,7 +276,7 @@ public class TrainTimeTableModel
             case Calendar.WEDNESDAY:
             case Calendar.THURSDAY:
             case Calendar.FRIDAY:
-                if(SettingFragment.DIRECTION_TYPE_1 == directionType)
+                if(Constants.DIRECTION_TYPE_1 == directionType)
                 {
                     //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU;
                     filename = res.getString(R.string.file_timetable_direction1_weekday);

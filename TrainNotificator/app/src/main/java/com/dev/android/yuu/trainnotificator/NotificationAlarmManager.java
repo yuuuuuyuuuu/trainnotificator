@@ -90,11 +90,11 @@ public class NotificationAlarmManager extends BroadcastReceiver
         Resources res = this.mContext.getResources();
         String notificationTitle = res.getString(R.string.name_target_station) + "発 ";
         int dayType = UserDataManager.GetDirectionType(this.mContext);
-        if(dayType == SettingFragment.DIRECTION_TYPE_1)
+        if(dayType == Constants.DIRECTION_TYPE_1)
         {
             notificationTitle += res.getString(R.string.name_direction1);
         }
-        else if(dayType == SettingFragment.DIRECTION_TYPE_2)
+        else if(dayType == Constants.DIRECTION_TYPE_2)
         {
             notificationTitle += res.getString(R.string.name_direction2);
         }
@@ -139,7 +139,7 @@ public class NotificationAlarmManager extends BroadcastReceiver
         int userDateType = UserDataManager.GetDateType(context);
         int todaysDay = CalendarUtility.GetCurrentDay();
         boolean canNotify = false;
-        if(SettingFragment.DATE_TYPE_WEEKDAY == userDateType)
+        if(Constants.DATE_TYPE_WEEKDAY == userDateType)
         {
             if(Calendar.SATURDAY != todaysDay && Calendar.SUNDAY != todaysDay)
             {
@@ -147,14 +147,14 @@ public class NotificationAlarmManager extends BroadcastReceiver
                 canNotify = true;
             }
         }
-        else if(SettingFragment.DATE_TYPE_WEEKEND == userDateType)
+        else if(Constants.DATE_TYPE_WEEKEND == userDateType)
         {
             if(Calendar.SATURDAY == todaysDay || Calendar.SUNDAY == todaysDay)
             {
                 canNotify = true;
             }
         }
-        else if(SettingFragment.DATE_TYPE_ALLDAY == userDateType)
+        else if(Constants.DATE_TYPE_ALLDAY == userDateType)
         {
             canNotify = true;
         }

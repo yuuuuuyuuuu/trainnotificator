@@ -61,11 +61,11 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         int directionType = UserDataManager.GetDirectionType(this.getActivity());
         String trainInfoTitle = "次の";
 
-        if(directionType == SettingFragment.DIRECTION_TYPE_1)
+        if(directionType == Constants.DIRECTION_TYPE_1)
         {
             trainInfoTitle += res.getString(R.string.name_direction1);
         }
-        else if(directionType == SettingFragment.DIRECTION_TYPE_2)
+        else if(directionType == Constants.DIRECTION_TYPE_2)
         {
             trainInfoTitle += res.getString(R.string.name_direction2);
         }

@@ -3,6 +3,7 @@ package com.dev.android.yuu.trainnotificator.utility;
 import android.content.Context;
 import android.util.Log;
 
+import com.dev.android.yuu.trainnotificator.Constants;
 import com.dev.android.yuu.trainnotificator.SettingFragment;
 import com.dev.android.yuu.trainnotificator.UserDataManager;
 
@@ -128,21 +129,21 @@ public class CalendarUtility
         // compare day
         switch (dayType)
         {
-            case SettingFragment.DATE_TYPE_WEEKDAY:
+            case Constants.DATE_TYPE_WEEKDAY:
                 if(Calendar.SUNDAY != todaysDay && Calendar.SATURDAY != todaysDay)
                 {
                     isDayInPreference = true;
                 }
                 break;
 
-            case SettingFragment.DATE_TYPE_WEEKEND:
+            case Constants.DATE_TYPE_WEEKEND:
                 if(Calendar.SUNDAY == todaysDay || Calendar.SATURDAY == todaysDay)
                 {
                     isDayInPreference = true;
                 }
                 break;
 
-            case SettingFragment.DATE_TYPE_ALLDAY:
+            case Constants.DATE_TYPE_ALLDAY:
                 isDayInPreference = true;
                 break;
         }
