@@ -26,8 +26,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_setting_notification_default_start_time"
-            android:drawableLeft="@drawable/ic_action_alarms"
+            android:text="@string/label_setting_notification_default_station"
+            android:drawableLeft="@drawable/ic_action_location_found"
             android:id="@+id/button"
             android:background="@drawable/round_green_button"
             android:textColor="@color/white"
