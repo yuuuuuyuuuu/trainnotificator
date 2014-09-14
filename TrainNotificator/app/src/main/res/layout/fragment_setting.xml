@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.dev.android.yuu.trainnotificator.StationSettingFragment"
+        android:id="@+id/fragment"
+        tools:layout="@layout/fragment_station_setting" />
+
+    <!--
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -20,23 +29,37 @@
             android:textColor="@color/almost_black"
             android:layout_marginLeft="10dp"
             android:layout_gravity="bottom" />
+
     </LinearLayout>
+    -->
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="1.5">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView2"
+                android:text="@string/label_setting_notification_start_time"
+                android:textSize="8pt"
+                android:textColor="@color/darkgray"
+                android:layout_gravity="left" />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:text="@string/label_setting_notification_default_start_time"
                 android:drawableLeft="@drawable/ic_action_alarms"
                 android:id="@+id/button_setting_start_time"
@@ -54,27 +77,29 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/textView2"
-                android:text="@string/label_setting_notification_start_time"
-                android:textSize="8pt"
-                android:textColor="@color/darkgray"
-                android:layout_gravity="center_horizontal" />
-
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView3"
+                android:text="@string/label_setting_notification_end_time"
+                android:layout_gravity="left"
+                android:textColor="@color/darkgray"
+                android:textSize="8pt" />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:text="@string/label_setting_notification_default_end_time"
                 android:drawableLeft="@drawable/ic_action_alarms"
                 android:background="@drawable/round_green_button"
@@ -93,15 +118,6 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/textView3"
-                android:text="@string/label_setting_notification_end_time"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/darkgray"
-                android:textSize="8pt" />
         </LinearLayout>
 
     </LinearLayout>
@@ -110,19 +126,20 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_weight="3">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_weight="5">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -130,7 +147,9 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_setting_notification_date"
                     android:id="@+id/textView5"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:textSize="8pt"
+                    android:textColor="@color/darkgray" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -197,7 +216,8 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,7 +226,9 @@
                     android:text="@string/label_setting_direction_title"
                     android:id="@+id/textView4"
                     android:layout_marginLeft="10dp"
-                    android:layout_gravity="bottom" />
+                    android:layout_gravity="bottom"
+                    android:textSize="8pt"
+                    android:textColor="@color/darkgray" />
 
                 <RadioGroup
                     android:layout_width="match_parent"

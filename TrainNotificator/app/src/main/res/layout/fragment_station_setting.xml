@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:id="@+id/linearlayout_station"
+        android:layout_weight="1.5"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewStationSetting"
+            android:text="@string/label_setting_notification_station"
+            android:textColor="@color/darkgray"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom"
+            android:textSize="8pt" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_setting_notification_default_start_time"
+            android:drawableLeft="@drawable/ic_action_alarms"
+            android:id="@+id/button"
+            android:background="@drawable/round_green_button"
+            android:textColor="@color/white"
+            android:shadowColor="@color/gray"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="5"
+            android:textSize="14pt"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

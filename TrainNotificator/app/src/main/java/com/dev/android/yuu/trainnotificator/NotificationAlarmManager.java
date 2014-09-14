@@ -24,9 +24,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
     private static final String TRAIN_NOTIFICATOR_ACTION_ALARM = "train_notificator_action_alarm";
     private static final int PENDING_INTENT_REQUEST_CODE = 99999;
 
-    private static final String EXTRA_KEY_HOUR_OF_DAY = "extra_key_hour_of_day";
-    private static final String EXTRA_KEY_MINUTE = "extra_key_minute";
-
     private NotificationManager mNotificationManager = null;
 
     private TrainTimeTableModel mTrainTimeTableModel = null;

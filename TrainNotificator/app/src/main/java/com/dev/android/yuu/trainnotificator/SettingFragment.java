@@ -42,18 +42,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private RadioButton mRadioButtonDirection1 = null;
     private RadioButton mRadioButtonDirection2 = null;
 
-    /*
-    // Date Type
-    public final static int DATE_TYPE_WEEKDAY = 1;
-    public final static int DATE_TYPE_WEEKEND = 2;
-    public final static int DATE_TYPE_ALLDAY = 3;
-
-    // Direction Type
-    public final static int DIRECTION_TYPE_1 = 1;
-    public final static int DIRECTION_TYPE_2 = 2;
-    */
-
-
     private boolean mIsCreateViewCompleted = false;
 
     private TrainTimeTableManager mTrainTimeTableManager = null;
