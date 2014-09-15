@@ -39,7 +39,35 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
 
         this.setStationListView();
 
+        this.setUpStation();
+
         return this.mView;
+    }
+
+    private void setUpStation()
+    {
+        Log.d(this.getClass().toString(), "setUpStation");
+
+        int stationId = this.loadStation();
+        Log.d(this.getClass().toString(), "stationId: " + stationId);
+
+        StationData stationData = null;
+        for(StationData data : this.mStationDataList)
+        {
+            if(data.Id() == stationId)
+            {
+                stationData = data;
+                break;
+            }
+        }
+
+        if(null == stationData)
+        {
+            Log.d(this.getClass().toString(), "saved station data not found");
+            return;
+        }
+
+        this.updateStation(stationData.Name());
     }
 
     private void setStationListView() {
@@ -110,8 +138,6 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
     public void onClick(DialogInterface dialogInterface, int i)
     {
         Log.d(this.getClass().toString(), "onClick(DialogInterface) i: " + i);
-
-
     }
 
     @Override
@@ -120,5 +146,31 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         Log.d(this.getClass().toString(), "onItemClick position: " + position);
 
         this.mStationListDialogBody.cancel();
+
+        StationData stationData = this.mStationDataList.get(position);
+
+        this.saveStation(stationData.Id());
+        this.updateStation(stationData.Name());
+    }
+
+    private void updateStation(String stationName)
+    {
+        Log.d(this.getClass().toString(), "updateStation(" + stationName + ")");
+
+        this.mButtonStationSetting.setText(stationName);
+    }
+
+    private void saveStation(int stationId)
+    {
+        Log.d(this.getClass().toString(), "saveStation(" + stationId + ")");
+
+        UserDataManager.SaveStation(stationId, this.getActivity());
+    }
+
+    private int loadStation()
+    {
+        Log.d(this.getClass().toString(), "loadStation");
+
+        return UserDataManager.GetStationId(this.getActivity());
     }
 }

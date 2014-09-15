@@ -16,6 +16,7 @@ public class UserDataManager {
     private static String DATA_KEY_END_MINUTE = "end_minute";
     private static String DATA_KEY_DATE_TYPE = "date";
     private static String DATA_KEY_DIRECTION_TYPE = "direction";
+    private static String DATA_KEY_STATION = "station";
 
     private static SharedPreferences LoadSharedPreference(Context context)
     {
@@ -72,6 +73,16 @@ public class UserDataManager {
         return directionType;
     }
 
+    public static int GetStationId(Context context)
+    {
+        int stationId = 0;
+
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+        stationId = sp.getInt(UserDataManager.DATA_KEY_STATION, -1);
+
+        return stationId;
+    }
+
     public static void SaveStartTime(int hourOfDay, int minute, Context context)
     {
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
@@ -110,6 +121,16 @@ public class UserDataManager {
 
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(UserDataManager.DATA_KEY_DIRECTION_TYPE, directionType);
+
+        editor.commit();
+    }
+
+    public static void SaveStation(int stationId, Context context)
+    {
+        SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(UserDataManager.DATA_KEY_STATION, stationId);
 
         editor.commit();
     }
