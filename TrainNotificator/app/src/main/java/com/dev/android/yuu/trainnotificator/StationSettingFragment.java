@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Chieko on 9/14/14.
  */
-public class StationSettingFragment extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener{
+public class StationSettingFragment extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemClickListener {
 
     private View mView = null;
     private Button mButtonStationSetting = null;
@@ -25,6 +26,7 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
     private ArrayList<StationData> mStationDataList = null;
     private ListView mStationListView = null;
     private AlertDialog.Builder mStationListDialog = null;
+    private AlertDialog mStationListDialogBody = null;
 
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
@@ -68,7 +70,9 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         this.mStationListDialog.setIcon(R.drawable.ic_action_location_found_dark);
         this.mStationListDialog.setNegativeButton(R.string.label_setting_station_dialog_cancel, this);
 
-        this.mStationListDialog.setView(this.mStationListView).create();
+        this.mStationListDialogBody = this.mStationListDialog.setView(this.mStationListView).create();
+
+        this.mStationListView.setOnItemClickListener(this);
 
     }
     private void setUiEventHandler()
@@ -89,9 +93,10 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         switch (viewId)
         {
             case R.id.buttonStationSetting:
-                /*test*/
-                this.mStationListDialog.show();
 
+                /*test*/
+                //this.mStationListDialog.show();
+                this.mStationListDialogBody.show();
                 break;
 
             default:
@@ -107,5 +112,13 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         Log.d(this.getClass().toString(), "onClick(DialogInterface) i: " + i);
 
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+    {
+        Log.d(this.getClass().toString(), "onItemClick position: " + position);
+
+        this.mStationListDialogBody.cancel();
     }
 }
