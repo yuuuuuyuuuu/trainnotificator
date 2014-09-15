@@ -248,12 +248,10 @@ public class TrainTimeTableModel
             case Calendar.SUNDAY:
                 if(Constants.DIRECTION_TYPE_1 == directionType)
                 {
-                    // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_SHINJUKU;
                     filename = res.getString(R.string.file_timetable_direction1_holiday);
                 }
                 else
                 {
-                    // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_HOLIDAY_OFUNA;
                     filename = res.getString(R.string.file_timetable_direction2_holiday);
                 }
                 break;
@@ -261,12 +259,10 @@ public class TrainTimeTableModel
             case Calendar.SATURDAY:
                 if(Constants.DIRECTION_TYPE_1 == directionType)
                 {
-                    // filename = FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_SHINJUKU;
                     filename = res.getString(R.string.file_timetable_direction1_saturday);
                 }
                 else
                 {
-                    //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_SATURDAY_OFUNA;
                     filename = res.getString(R.string.file_timetable_direction2_saturday);
                 }
                 break;
@@ -278,12 +274,10 @@ public class TrainTimeTableModel
             case Calendar.FRIDAY:
                 if(Constants.DIRECTION_TYPE_1 == directionType)
                 {
-                    //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_SHINJUKU;
                     filename = res.getString(R.string.file_timetable_direction1_weekday);
                 }
                 else
                 {
-                    //filename = FILENAME_TIMETABLE_SHONANSHINJUKU_WEEKDAY_OFUNA;
                     filename = res.getString(R.string.file_timetable_direction2_weekday);
                 }
                 break;
@@ -293,9 +287,6 @@ public class TrainTimeTableModel
         }
 
         Log.d(this.getClass().toString(), "filename: " + filename);
-
-        /*test */
-        //filename = "timetable_sotetsu_ryokuen.txt";
 
         return  filename;
     }
