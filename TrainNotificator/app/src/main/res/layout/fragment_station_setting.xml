@@ -27,8 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_setting_notification_default_station"
+            android:drawableStart="@drawable/ic_action_location_found"
             android:drawableLeft="@drawable/ic_action_location_found"
-            android:id="@+id/button"
+            android:id="@+id/buttonStationSetting"
             android:background="@drawable/round_green_button"
             android:textColor="@color/white"
             android:shadowColor="@color/gray"
@@ -41,7 +42,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="0dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="60dp" />
 
     </LinearLayout>
 

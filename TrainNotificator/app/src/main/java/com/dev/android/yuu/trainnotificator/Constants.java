@@ -13,4 +13,11 @@ public class Constants
     // Direction Type
     public final static int DIRECTION_TYPE_1 = 1;
     public final static int DIRECTION_TYPE_2 = 2;
+
+    // Stations
+    public final static int STATION_ID_YOKOHAMA = 1;
+    public final static int STATION_ID_SHINKAWASAKI = 2;
+    public final static int STATION_ID_MUSASHIKOSUGI = 3;
+    public final static int STATION_ID_NISHIOI = 4;
+    public final static int STATION_ID_OSAKI = 5;
 }

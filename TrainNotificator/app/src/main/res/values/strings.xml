@@ -25,6 +25,7 @@
     <string name="label_setting_direction_title">方面の設定</string>
     <string name="label_direction_shinjuku">新宿方面</string>
     <string name="label_direction_ofuna">大船方面</string>
+    <string name="label_setting_station_dialog_cancel">戻る</string>
 
 
 </resources>
