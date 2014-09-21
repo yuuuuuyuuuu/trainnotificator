@@ -49,9 +49,30 @@ public class NotificationAlarmManager extends BroadcastReceiver
     {
         Log.d(this.getClass().toString(), "SetNextNotification(" + hourOfDay + "," + minute);
 
+
         // Setting next notification time
         Calendar calendar = Calendar.getInstance();
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
+
+
+        boolean needToSetForTomorrow = false;
+        int currentHourOfDay = CalendarUtility.GetCurrentHourOfDay();
+        int currentMinute = CalendarUtility.GetCurrentMinute();
+
+        if(hourOfDay < currentHourOfDay)
+        {
+            needToSetForTomorrow = true;
+        }
+        else if(hourOfDay == currentHourOfDay && minute < currentMinute)
+        {
+            needToSetForTomorrow = true;
+        }
+        else
+        {
+            // no need to set notification for tomorrow
+        }
+
+        if(needToSetForTomorrow) calendar.add(Calendar.DATE, 1);
 
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
@@ -124,7 +145,8 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         // Next train data
         TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
-        TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
+        // TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
+        TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainData();
 
         if(null == nextTrainData)
         {

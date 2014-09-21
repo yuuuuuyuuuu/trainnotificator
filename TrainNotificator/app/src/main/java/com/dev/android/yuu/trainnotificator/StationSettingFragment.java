@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
+
 import java.util.ArrayList;
 
 /**
@@ -68,6 +70,7 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         }
 
         this.updateStation(stationData.Name());
+
     }
 
     private void setStationListView() {
@@ -156,6 +159,9 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
     private void updateStation(String stationName)
     {
         Log.d(this.getClass().toString(), "updateStation(" + stationName + ")");
+
+        // test
+        TrainTimeTableUtility.GetTodaysTimetable(this.getActivity());
 
         this.mButtonStationSetting.setText(stationName);
     }
