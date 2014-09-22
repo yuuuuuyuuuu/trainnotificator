@@ -1,5 +1,6 @@
 package com.dev.android.yuu.trainnotificator;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -20,7 +21,14 @@ import java.util.ArrayList;
 /**
  * Created by Chieko on 9/14/14.
  */
-public class StationSettingFragment extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemClickListener {
+public class StationSettingFragment extends Fragment implements View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemClickListener{
+
+    public interface OnStationChangedListener
+    {
+        public void onStationChanged(int stationId);
+    }
+
+    private OnStationChangedListener mCallback = null;
 
     private View mView = null;
     private Button mButtonStationSetting = null;
@@ -45,6 +53,22 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
 
         return this.mView;
     }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+
+        try
+        {
+            this.mCallback = (OnStationChangedListener)activity;
+        }
+        catch (Exception e)
+        {
+            throw new ClassCastException(activity.toString() + " cannot be casted to OnStationChangedListener");
+        }
+    }
+
 
     private void setUpStation()
     {

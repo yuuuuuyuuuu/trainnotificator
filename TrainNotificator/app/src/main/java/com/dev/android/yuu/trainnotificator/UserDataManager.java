@@ -2,6 +2,11 @@ package com.dev.android.yuu.trainnotificator;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
+
+import java.util.Calendar;
 
 /**
  * Created by Chieko on 8/30/14.
@@ -134,5 +139,71 @@ public class UserDataManager {
 
         editor.commit();
     }
+
+    public static boolean IsNowInUserPreferableTime(Context context)
+    {
+        boolean result = false;
+
+        int userDay = UserDataManager.GetDateType(context);
+        int[] userStartTime = UserDataManager.GetStartTime(context);
+        int userStartHourOfDay = userStartTime[0];
+        int userStartMinute = userStartTime[1];
+        int[] userEndTime = UserDataManager.GetEndTime(context);
+        int userEndHourOfDay = userEndTime[0];
+        int userEndMinute = userEndTime[1];
+
+        int currentDay = CalendarUtility.GetCurrentDay();
+        int currentHourOfDay = CalendarUtility.GetCurrentHourOfDay();
+        int curentMinute = CalendarUtility.GetCurrentMinute();
+
+        boolean isDayWithin = false;
+        boolean isTimeWithin = false;
+        boolean isMinuteWithin = false;
+
+        // Day
+        if(Constants.DATE_TYPE_WEEKDAY == userDay)
+        {
+            if(currentDay != Calendar.SUNDAY && currentDay != Calendar.SATURDAY)
+            {
+                isDayWithin = true;
+            }
+        }
+        else if(Constants.DATE_TYPE_WEEKEND == userDay)
+        {
+            if(currentDay == Calendar.SUNDAY || currentDay == Calendar.SATURDAY)
+            {
+                isDayWithin = true;
+            }
+        }
+        else if(Constants.DATE_TYPE_ALLDAY == userDay)
+        {
+            isDayWithin = true;
+        }
+
+        // Hour
+        if(userStartHourOfDay < currentHourOfDay && currentHourOfDay < userEndHourOfDay)
+        {
+            isTimeWithin = true;
+        }
+        else if(userStartHourOfDay == currentHourOfDay)
+        {
+            if(userStartMinute <= currentHourOfDay)
+            {
+                isTimeWithin = true;
+            }
+        }
+        else if(currentHourOfDay == userEndHourOfDay)
+        {
+            if(currentHourOfDay <= userEndHourOfDay)
+            {
+                isTimeWithin = true;
+            }
+        }
+
+        if(isDayWithin && isTimeWithin) result = true;
+
+        return result;
+    }
+
 
 }

@@ -145,7 +145,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         // Next train data
         TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
-        // TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainDataWithUserPreference();
         TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainData();
 
         if(null == nextTrainData)
@@ -154,31 +153,10 @@ public class NotificationAlarmManager extends BroadcastReceiver
             return;
         }
 
-        // launch now to notice next train time
-        int userDateType = UserDataManager.GetDateType(context);
-        int todaysDay = CalendarUtility.GetCurrentDay();
-        boolean canNotify = false;
-        if(Constants.DATE_TYPE_WEEKDAY == userDateType)
+        if(UserDataManager.IsNowInUserPreferableTime(context))
         {
-            if(Calendar.SATURDAY != todaysDay && Calendar.SUNDAY != todaysDay)
-            {
-                // OK to notify
-                canNotify = true;
-            }
+            this.LaunchNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
         }
-        else if(Constants.DATE_TYPE_WEEKEND == userDateType)
-        {
-            if(Calendar.SATURDAY == todaysDay || Calendar.SUNDAY == todaysDay)
-            {
-                canNotify = true;
-            }
-        }
-        else if(Constants.DATE_TYPE_ALLDAY == userDateType)
-        {
-            canNotify = true;
-        }
-
-        if(canNotify) this.LaunchNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
 
         // set following notification to update train time
         this.SetNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());

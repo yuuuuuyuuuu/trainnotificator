@@ -22,7 +22,7 @@ import android.os.Build;
 import android.view.Window;
 
 
-public class MainActivity extends FragmentActivity implements FragmentUpdateListener{
+public class MainActivity extends FragmentActivity implements FragmentUpdateListener, StationSettingFragment.OnStationChangedListener {
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
 
@@ -70,6 +70,13 @@ public class MainActivity extends FragmentActivity implements FragmentUpdateList
         FragmentManager fm = getFragmentManager();
         TrainInfoFragment fragment = (TrainInfoFragment)fm.findFragmentById(R.id.traininfo_fragment);
         fragment.updateTrainInfo();
+    }
+
+    @Override
+    public void onStationChanged(int stationId)
+    {
+        Log.d(this.getClass().toString(), "onStationChanged(" + stationId + ")");
+
     }
 
     /**
