@@ -49,7 +49,7 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         Resources res = getResources();
 
         // Update train information
-        TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(this.getActivity());
+        TrainTimeTableManager trainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
         TrainTimeData nextTrainTimeData = trainTimeTableManager.FindNextTrainData();
 
         String minuteString = String.valueOf(nextTrainTimeData.Minute());

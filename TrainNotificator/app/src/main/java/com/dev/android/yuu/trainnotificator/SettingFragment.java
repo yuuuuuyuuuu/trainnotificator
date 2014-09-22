@@ -496,7 +496,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         Log.d(this.getClass().toString(), "updateNextNotification(" + needForceUpdate + ")");
 
-        if(needForceUpdate || null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
+        if(needForceUpdate || null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
 
         if(null == nextTrainData)
@@ -524,7 +524,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             return;
         }
 
-        if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = new TrainTimeTableManager(this.getActivity());
+        if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
 
         if(null == nextTrainData)

@@ -8,13 +8,31 @@ import android.util.Log;
  */
 public class TrainTimeTableManager
 {
+    private static TrainTimeTableManager instance = null;
 
     private Context mContext = null;
     private TrainTimeTableModel mTrainTimeTableModel = null;
 
-    public TrainTimeTableManager(Context context)
+    public static TrainTimeTableManager getInstance(Context context)
+    {
+        if(null == instance)
+        {
+            instance = new TrainTimeTableManager(context);
+        }
+
+        return instance;
+    }
+
+    private TrainTimeTableManager(Context context)
     {
         this.mContext = context;
+        this.mTrainTimeTableModel = new TrainTimeTableModel(this.mContext);
+    }
+
+    public void updateTimetable()
+    {
+        Log.d(this.getClass().toString(), "updateTimetable");
+
         this.mTrainTimeTableModel = new TrainTimeTableModel(this.mContext);
     }
 

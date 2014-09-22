@@ -144,7 +144,8 @@ public class NotificationAlarmManager extends BroadcastReceiver
         this.mContext = context;
 
         // Next train data
-        TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
+        // TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
+        TrainTimeTableManager trainTimeTableManager = TrainTimeTableManager.getInstance(this.mContext);
         TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainData();
 
         if(null == nextTrainData)

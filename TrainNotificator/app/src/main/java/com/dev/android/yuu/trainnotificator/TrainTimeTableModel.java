@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
+import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -130,6 +131,7 @@ public class TrainTimeTableModel
         InputStream is = null;
 
         String dataTableFileName = this.getTableDataFile();
+        //String dataTableFileName = TrainTimeTableUtility.GetTodaysTimetable(this.mContext);
         Log.d(this.getClass().toString(), "time table file: " + dataTableFileName);
 
         try
