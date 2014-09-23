@@ -21,21 +21,56 @@ public class TrainTimeTableUtility
         String filename = "";
 
         int stationId = UserDataManager.GetStationId(context);
-        String stationName = TrainTimeTableUtility.getStationName(stationId);
+        String stationName = TrainTimeTableUtility.GetStationName(stationId);
 
         String dayName = TrainTimeTableUtility.getDayName();
 
         int directionType = UserDataManager.GetDirectionType(context);
         String directionName = TrainTimeTableUtility.getDirectionName(directionType);
 
-        String filePath = stationName + "/" + dayName + "/" + directionName;
+        //String filePath = stationName + "/" + dayName + "/" + directionName + "_direction";
+        //filePath += "/timetable_" + "shonanshinjukuline_" + dayName + "_" + directionName + "_direction.txt";
 
-        Log.d(TrainTimeTableUtility.class.toString(), "filePath: " + filePath);
+        filename = "timetable_shonanshinjukuline_" + stationName + "_" + dayName + "_" + directionName + "_direction.txt";
+
+        //Log.d(TrainTimeTableUtility.class.toString(), "filePath: " + filePath);
 
         return filename;
     }
 
-    private static String getStationName(int id)
+    public static String GetStationDisplayName(int id)
+    {
+        String stationName = "";
+
+        switch(id)
+        {
+            case Constants.STATION_ID_YOKOHAMA:
+                stationName = "横浜";
+                break;
+
+            case Constants.STATION_ID_SHINKAWASAKI:
+                stationName = "新川崎";
+                break;
+
+            case Constants.STATION_ID_MUSASHIKOSUGI:
+                stationName = "武蔵小杉";
+                break;
+
+            case Constants.STATION_ID_NISHIOI:
+                stationName = "西大井";
+                break;
+
+            case Constants.STATION_ID_OSAKI:
+                stationName = "大崎";
+                break;
+
+            default:
+                break;
+        }
+        return stationName;
+    }
+
+    public static String GetStationName(int id)
     {
         String stationName = "";
 
@@ -45,7 +80,20 @@ public class TrainTimeTableUtility
                 stationName = "yokohama";
                 break;
 
+            case Constants.STATION_ID_SHINKAWASAKI:
+                stationName = "shinkawasaki";
+                break;
+
+            case Constants.STATION_ID_MUSASHIKOSUGI:
+                stationName = "musashikosugi";
+                break;
+
+            case Constants.STATION_ID_NISHIOI:
+                stationName = "nishioi";
+                break;
+
             case Constants.STATION_ID_OSAKI:
+                stationName = "osaki";
                 break;
 
             default:
@@ -63,7 +111,7 @@ public class TrainTimeTableUtility
         switch (directionType)
         {
             case Constants.DIRECTION_TYPE_1:
-                directionName = "shinjuku";
+                directionName = "shinjyuku";
                 break;
 
             case Constants.DIRECTION_TYPE_2:
@@ -100,7 +148,7 @@ public class TrainTimeTableUtility
                 break;
 
             case Calendar.SATURDAY:
-                dayName = "weekend";
+                dayName = "saturday";
                 break;
 
             default:

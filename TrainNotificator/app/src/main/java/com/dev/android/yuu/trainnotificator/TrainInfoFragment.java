@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
+
 import org.w3c.dom.Text;
 
 /**
@@ -50,6 +52,7 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
 
         // Update train information
         TrainTimeTableManager trainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
+        trainTimeTableManager.updateTimetable();
         TrainTimeData nextTrainTimeData = trainTimeTableManager.FindNextTrainData();
 
         String minuteString = String.valueOf(nextTrainTimeData.Minute());
@@ -59,7 +62,10 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         this.setTrainInfoLabel(trainInfoLabel);
 
         int directionType = UserDataManager.GetDirectionType(this.getActivity());
-        String trainInfoTitle = "次の";
+        int stationId = UserDataManager.GetStationId(this.getActivity());
+        String stationName = TrainTimeTableUtility.GetStationDisplayName(stationId);
+
+        String trainInfoTitle = "次の" + stationName + "発 ";
 
         if(directionType == Constants.DIRECTION_TYPE_1)
         {

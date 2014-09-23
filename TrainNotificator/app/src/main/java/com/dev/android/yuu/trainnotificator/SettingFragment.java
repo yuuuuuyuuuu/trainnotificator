@@ -1,5 +1,6 @@
 package com.dev.android.yuu.trainnotificator;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.NotificationManager;
 import android.app.TimePickerDialog;
@@ -47,6 +48,13 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private TrainTimeTableManager mTrainTimeTableManager = null;
     private NotificationAlarmManager mNotificationAlarmManager = null;
 
+    public interface OnTrainInfoUpdatedListener
+    {
+        public void onTrainInfoUpdated();
+    }
+
+    private OnTrainInfoUpdatedListener mCallback = null;
+
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
     {
@@ -61,6 +69,21 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         this.mIsCreateViewCompleted = true;
 
         return this.mView;
+    }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+
+        try
+        {
+            this.mCallback = (OnTrainInfoUpdatedListener)activity;
+        }
+        catch (Exception e)
+        {
+            throw new ClassCastException(activity.toString() + " cannot be casted to OnTrainInfoUpdatedListener");
+        }
     }
 
     private void setUserTime()
@@ -310,7 +333,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
                 // UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_2, getActivity());
                 UserDataManager.SaveDirectionType(Constants.DIRECTION_TYPE_2, getActivity());
 
-                if(this.mIsCreateViewCompleted) this.showToast("方面が " + res.getString(R.string.name_direction1) +  " 方面に設定されました");
+                if(this.mIsCreateViewCompleted) this.showToast("方面が " + res.getString(R.string.name_direction2) +  " 方面に設定されました");
                 this.setSelectedStyle(this.mRadioButtonDirection2);
                 if(!this.mIsCreateViewCompleted) this.mRadioButtonDirection2.setChecked(true);
                 break;
@@ -318,7 +341,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             default:
                 break;
         }
-
+        if(null != this.mTrainTimeTableManager) this.mTrainTimeTableManager.updateTimetable();
         this.updateNextNotification(true);
     }
 
@@ -510,7 +533,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
 
         // notify main activity
-        ((MainActivity)this.getActivity()).trainInfoUpdated();
+        //((MainActivity)this.getActivity()).trainInfoUpdated();
+        this.mCallback.onTrainInfoUpdated();
     }
 
     private void launchNotification()

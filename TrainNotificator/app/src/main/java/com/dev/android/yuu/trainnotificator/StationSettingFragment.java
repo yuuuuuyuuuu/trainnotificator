@@ -69,7 +69,6 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         }
     }
 
-
     private void setUpStation()
     {
         Log.d(this.getClass().toString(), "setUpStation");
@@ -103,16 +102,16 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         this.mStationDataList = new ArrayList<StationData>();
 
         StationData stationData1 = new StationData("横浜", Constants.STATION_ID_YOKOHAMA);
-        StationData stationData2 = new StationData("新川崎", Constants.STATION_ID_SHINKAWASAKI);
+        //StationData stationData2 = new StationData("新川崎", Constants.STATION_ID_SHINKAWASAKI);
         StationData stationData3 = new StationData("武蔵小杉", Constants.STATION_ID_MUSASHIKOSUGI);
-        StationData stationData4 = new StationData("西大井", Constants.STATION_ID_NISHIOI);
-        StationData stationData5 = new StationData("大崎", Constants.STATION_ID_OSAKI);
+        //StationData stationData4 = new StationData("西大井", Constants.STATION_ID_NISHIOI);
+        //StationData stationData5 = new StationData("大崎", Constants.STATION_ID_OSAKI);
 
         this.mStationDataList.add(stationData1);
-        this.mStationDataList.add(stationData2);
+        //this.mStationDataList.add(stationData2);
         this.mStationDataList.add(stationData3);
-        this.mStationDataList.add(stationData4);
-        this.mStationDataList.add(stationData5);
+        //this.mStationDataList.add(stationData4);
+        //this.mStationDataList.add(stationData5);
 
         //ArrayAdapter<StationData> arrayAdapter = new ArrayAdapter<StationData>(this.getActivity(), android.R.layout.simple_list_item_1, this.mStationDataList);
         StationListAdapter stationListAdapter = new StationListAdapter(this.getActivity(), R.layout.station_list_item, this.mStationDataList);
@@ -184,9 +183,6 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
     {
         Log.d(this.getClass().toString(), "updateStation(" + stationName + ")");
 
-        // test
-        TrainTimeTableUtility.GetTodaysTimetable(this.getActivity());
-
         this.mButtonStationSetting.setText(stationName);
     }
 
@@ -195,6 +191,8 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         Log.d(this.getClass().toString(), "saveStation(" + stationId + ")");
 
         UserDataManager.SaveStation(stationId, this.getActivity());
+
+        this.mCallback.onStationChanged(stationId);
     }
 
     private int loadStation()

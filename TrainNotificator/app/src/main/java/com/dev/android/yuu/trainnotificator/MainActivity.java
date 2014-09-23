@@ -1,28 +1,17 @@
 package com.dev.android.yuu.trainnotificator;
 
-import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
-import android.view.Window;
 
-
-public class MainActivity extends FragmentActivity implements FragmentUpdateListener, StationSettingFragment.OnStationChangedListener {
+public class MainActivity extends FragmentActivity implements SettingFragment.OnTrainInfoUpdatedListener, StationSettingFragment.OnStationChangedListener {
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
 
@@ -63,9 +52,9 @@ public class MainActivity extends FragmentActivity implements FragmentUpdateList
     }
 
     @Override
-    public void trainInfoUpdated()
+    public void onStationChanged(int stationId)
     {
-        Log.d(this.getClass().toString(), "trainInfoUpdated");
+        Log.d(this.getClass().toString(), "onStationChanged(" + stationId + ")");
 
         FragmentManager fm = getFragmentManager();
         TrainInfoFragment fragment = (TrainInfoFragment)fm.findFragmentById(R.id.traininfo_fragment);
@@ -73,10 +62,13 @@ public class MainActivity extends FragmentActivity implements FragmentUpdateList
     }
 
     @Override
-    public void onStationChanged(int stationId)
+    public void onTrainInfoUpdated()
     {
-        Log.d(this.getClass().toString(), "onStationChanged(" + stationId + ")");
+        Log.d(this.getClass().toString(), "onTrainInfoUpdated(");
 
+        FragmentManager fm = getFragmentManager();
+        TrainInfoFragment fragment = (TrainInfoFragment)fm.findFragmentById(R.id.traininfo_fragment);
+        fragment.updateTrainInfo();
     }
 
     /**

@@ -130,9 +130,10 @@ public class TrainTimeTableModel
 
         InputStream is = null;
 
-        String dataTableFileName = this.getTableDataFile();
-        //String dataTableFileName = TrainTimeTableUtility.GetTodaysTimetable(this.mContext);
+        //String dataTableFileName = this.getTableDataFile();
+        String dataTableFileName = TrainTimeTableUtility.GetTodaysTimetable(this.mContext);
         Log.d(this.getClass().toString(), "time table file: " + dataTableFileName);
+        //Log.d(this.getClass().toString(), "time table file test: " + dataTableFileNameTest);
 
         try
         {
