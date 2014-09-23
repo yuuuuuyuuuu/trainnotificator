@@ -534,7 +534,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             return;
         }
 
-        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
+        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = NotificationAlarmManager.getInstance((this.getActivity()));
 
         this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
 
@@ -552,8 +552,12 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             return;
         }
 
-        if(null == this.mTrainTimeTableManager) this.mTrainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
-        TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
+        if(null == this.mTrainTimeTableManager)
+        {
+            this.mTrainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
+        }
+        // TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
+        TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainData();
 
         if(null == nextTrainData)
         {
@@ -561,7 +565,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
             return;
         }
 
-        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = new NotificationAlarmManager((this.getActivity()));
+        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = NotificationAlarmManager.getInstance((this.getActivity()));
         this.mNotificationAlarmManager.LaunchNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
 

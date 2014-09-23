@@ -21,7 +21,8 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
 
         setContentView(R.layout.activity_main);
 
-        this.mNotificationAlarmManager = new NotificationAlarmManager(this);
+        // this.mNotificationAlarmManager = new NotificationAlarmManager(this);
+        this.mNotificationAlarmManager = NotificationAlarmManager.getInstance(this);
 
         /*
         if (savedInstanceState == null) {

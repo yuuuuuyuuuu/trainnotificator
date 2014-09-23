@@ -24,6 +24,8 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
     private TextView mTextViewTrainInfo = null;
     private TextView mTextViewTrainInfoTitle = null;
 
+    private NotificationAlarmManager mNotificationManager = null;
+
     @Override
     public View onCreateView(LayoutInflater inflator, ViewGroup container, Bundle savedInstanceState)
     {
@@ -32,6 +34,8 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         this.view = inflator.inflate(R.layout.fragment_train_info, container, false);
 
         this.setUiEventHandlers();
+
+        this.mNotificationManager = NotificationAlarmManager.getInstance(this.getActivity());
 
         return this.view;
     }
@@ -82,6 +86,12 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
 
         trainInfoTitle += " 方面は";
         this.setTrainInfoTitle(trainInfoTitle);
+
+        if(UserDataManager.IsNowInUserPreferableTime(this.getActivity()))
+        {
+            this.mNotificationManager.LaunchNotification(this.getActivity(), nextTrainTimeData.HourOfDay(), nextTrainTimeData.Minute());
+        }
+
     }
 
 

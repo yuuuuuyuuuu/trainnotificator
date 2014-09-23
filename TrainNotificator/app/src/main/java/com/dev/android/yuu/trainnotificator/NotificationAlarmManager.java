@@ -28,12 +28,23 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
     private TrainTimeTableModel mTrainTimeTableModel = null;
 
+    private long mLastNotificationLaunchTime = 0;
+
     public NotificationAlarmManager()
     {
         Log.d(this.getClass().toString(), "default constructor");
     }
 
-    public NotificationAlarmManager(Context context)
+    private static NotificationAlarmManager instance = null;
+
+    public static NotificationAlarmManager getInstance(Context context)
+    {
+        if(null == instance) instance = new NotificationAlarmManager(context);
+
+        return instance;
+    }
+
+    private NotificationAlarmManager(Context context)
     {
         this.mContext = context;
 
@@ -93,6 +104,13 @@ public class NotificationAlarmManager extends BroadcastReceiver
     public void LaunchNotification(Context context, int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "LaunchNotification(" + hourOfDay + "," + minute + ")");
+
+        if(Calendar.getInstance().getTimeInMillis() - this.mLastNotificationLaunchTime < 300)
+        {
+            Log.d(this.getClass().toString(), "Notification launch canceled since it's within 300ms from last launch");
+            return;
+        }
+        this.mLastNotificationLaunchTime = Calendar.getInstance().getTimeInMillis();
 
         Intent i = new Intent(context, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
