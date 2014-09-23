@@ -36,8 +36,8 @@ public class UserDataManager {
         int minute = 0;
 
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
-        hourOfDay = sp.getInt(UserDataManager.DATA_KEY_START_HOUR_OF_DAY, -1);
-        minute = sp.getInt(UserDataManager.DATA_KEY_START_MINUTE, -1);
+        hourOfDay = sp.getInt(UserDataManager.DATA_KEY_START_HOUR_OF_DAY, 7);
+        minute = sp.getInt(UserDataManager.DATA_KEY_START_MINUTE, 0);
 
         int[] result = {hourOfDay, minute};
 
@@ -50,8 +50,8 @@ public class UserDataManager {
         int minute = 0;
 
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
-        hourOfDay = sp.getInt(UserDataManager.DATA_KEY_END_HOUR_OF_DAY, -1);
-        minute = sp.getInt(UserDataManager.DATA_KEY_END_MINUTE, -1);
+        hourOfDay = sp.getInt(UserDataManager.DATA_KEY_END_HOUR_OF_DAY, 9);
+        minute = sp.getInt(UserDataManager.DATA_KEY_END_MINUTE, 0);
 
         int[] result = {hourOfDay, minute};
 
@@ -63,7 +63,7 @@ public class UserDataManager {
         int dateType = 0;
 
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
-        dateType = sp.getInt(UserDataManager.DATA_KEY_DATE_TYPE, -1);
+        dateType = sp.getInt(UserDataManager.DATA_KEY_DATE_TYPE, Constants.DATE_TYPE_WEEKDAY);
 
         return dateType;
     }
@@ -73,7 +73,7 @@ public class UserDataManager {
         int directionType = 0;
 
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
-        directionType = sp.getInt(UserDataManager.DATA_KEY_DIRECTION_TYPE, -1);
+        directionType = sp.getInt(UserDataManager.DATA_KEY_DIRECTION_TYPE, Constants.DIRECTION_TYPE_1);
 
         return directionType;
     }
@@ -83,7 +83,7 @@ public class UserDataManager {
         int stationId = 0;
 
         SharedPreferences sp = UserDataManager.LoadSharedPreference(context);
-        stationId = sp.getInt(UserDataManager.DATA_KEY_STATION, -1);
+        stationId = sp.getInt(UserDataManager.DATA_KEY_STATION, Constants.STATION_ID_YOKOHAMA);
 
         return stationId;
     }

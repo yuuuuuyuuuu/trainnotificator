@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">横浜発 湘南新宿ライン</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">NEXT湘南新宿ライン</string>
     <string name="action_settings">Settings</string>
     <string name="label_setting_title">通知時間の設定</string>
     <string name="label_setting_notification_start_time">通知開始時間</string>
