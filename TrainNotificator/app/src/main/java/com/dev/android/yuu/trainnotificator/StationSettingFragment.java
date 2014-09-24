@@ -102,13 +102,13 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         this.mStationDataList = new ArrayList<StationData>();
 
         StationData stationData1 = new StationData("横浜", Constants.STATION_ID_YOKOHAMA);
-        //StationData stationData2 = new StationData("新川崎", Constants.STATION_ID_SHINKAWASAKI);
+        StationData stationData2 = new StationData("新川崎", Constants.STATION_ID_SHINKAWASAKI);
         StationData stationData3 = new StationData("武蔵小杉", Constants.STATION_ID_MUSASHIKOSUGI);
         //StationData stationData4 = new StationData("西大井", Constants.STATION_ID_NISHIOI);
         StationData stationData5 = new StationData("大崎", Constants.STATION_ID_OSAKI);
 
         this.mStationDataList.add(stationData1);
-        //this.mStationDataList.add(stationData2);
+        this.mStationDataList.add(stationData2);
         this.mStationDataList.add(stationData3);
         //this.mStationDataList.add(stationData4);
         this.mStationDataList.add(stationData5);
