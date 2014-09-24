@@ -72,6 +72,12 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         fragment.updateTrainInfo();
     }
 
+    @Override
+    public void onSettingUpdated()
+    {
+        Log.d(this.getClass().toString(), "onSettingUpdated");
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */

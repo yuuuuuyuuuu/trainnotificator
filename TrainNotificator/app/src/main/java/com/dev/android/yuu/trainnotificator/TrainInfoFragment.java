@@ -87,13 +87,9 @@ public class TrainInfoFragment extends Fragment implements View.OnClickListener 
         trainInfoTitle += " 方面は";
         this.setTrainInfoTitle(trainInfoTitle);
 
-        if(UserDataManager.IsNowInUserPreferableTime(this.getActivity()))
-        {
-            this.mNotificationManager.LaunchNotification(this.getActivity(), nextTrainTimeData.HourOfDay(), nextTrainTimeData.Minute());
-        }
+        this.mNotificationManager.SetNotification(this.getActivity(), nextTrainTimeData.HourOfDay(), nextTrainTimeData.Minute());
 
     }
-
 
     private void setTrainInfoLabel(String text)
     {

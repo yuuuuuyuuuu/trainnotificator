@@ -53,18 +53,15 @@ public class NotificationAlarmManager extends BroadcastReceiver
         TrainTimeData nextTrainData = this.mTrainTimeTableModel.GetNextTrainTime();
 
         this.SetNotification(this.mContext, nextTrainData.HourOfDay(), nextTrainData.Minute());
-
     }
 
     public void SetNotification(Context context, int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "SetNextNotification(" + hourOfDay + "," + minute);
 
-
         // Setting next notification time
         Calendar calendar = Calendar.getInstance();
         Log.d(this.getClass().toString(), calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DATE) +"  " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get((Calendar.MINUTE)));
-
 
         boolean needToSetForTomorrow = false;
         int currentHourOfDay = CalendarUtility.GetCurrentHourOfDay();
@@ -99,17 +96,23 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
+
+        if(UserDataManager.IsNowInUserPreferableTime(this.mContext))
+        {
+            this.launchNotification(this.mContext, hourOfDay, minute);
+        }
     }
 
-    public void LaunchNotification(Context context, int hourOfDay, int minute)
+    private void launchNotification(Context context, int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "LaunchNotification(" + hourOfDay + "," + minute + ")");
 
-        if(Calendar.getInstance().getTimeInMillis() - this.mLastNotificationLaunchTime < 300)
+        if(Calendar.getInstance().getTimeInMillis() - this.mLastNotificationLaunchTime < 1000)
         {
             Log.d(this.getClass().toString(), "Notification launch canceled since it's within 300ms from last launch");
             return;
         }
+
         this.mLastNotificationLaunchTime = Calendar.getInstance().getTimeInMillis();
 
         Intent i = new Intent(context, MainActivity.class);
@@ -162,7 +165,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
         this.mContext = context;
 
         // Next train data
-        // TrainTimeTableManager trainTimeTableManager = new TrainTimeTableManager(context);
         TrainTimeTableManager trainTimeTableManager = TrainTimeTableManager.getInstance(this.mContext);
         TrainTimeData nextTrainData = trainTimeTableManager.FindNextTrainData();
 
@@ -170,11 +172,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
         {
             Log.e(this.getClass().toString(), "Could NOT find next train data");
             return;
-        }
-
-        if(UserDataManager.IsNowInUserPreferableTime(context))
-        {
-            this.LaunchNotification(context, nextTrainData.HourOfDay(), nextTrainData.Minute());
         }
 
         // set following notification to update train time

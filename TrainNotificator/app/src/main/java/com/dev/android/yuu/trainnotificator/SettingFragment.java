@@ -51,6 +51,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     public interface OnTrainInfoUpdatedListener
     {
         public void onTrainInfoUpdated();
+        public void onSettingUpdated();
     }
 
     private OnTrainInfoUpdatedListener mCallback = null;
@@ -556,7 +557,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         {
             this.mTrainTimeTableManager = TrainTimeTableManager.getInstance(this.getActivity());
         }
-        // TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
+
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainData();
 
         if(null == nextTrainData)
@@ -566,7 +567,7 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
 
         if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = NotificationAlarmManager.getInstance((this.getActivity()));
-        this.mNotificationAlarmManager.LaunchNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
+        this.mNotificationAlarmManager.SetNotification(this.getActivity(), nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
 
     private void showToast(String message)
