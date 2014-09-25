@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
+import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
 
 import java.util.Calendar;
 
@@ -127,7 +128,9 @@ public class NotificationAlarmManager extends BroadcastReceiver
         }
 
         Resources res = this.mContext.getResources();
-        String notificationTitle = res.getString(R.string.name_target_station) + "発 ";
+        // String notificationTitle = res.getString(R.string.name_target_station) + "発 ";
+        String notificationTitle = TrainTimeTableUtility.GetStationDisplayName(UserDataManager.GetStationId(context)) + "発 ";
+
         int dayType = UserDataManager.GetDirectionType(this.mContext);
         if(dayType == Constants.DIRECTION_TYPE_1)
         {
