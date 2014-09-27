@@ -39,6 +39,7 @@
         android:layout_height="0dp"
         android:layout_weight="1.5">
 
+        <!--
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -119,7 +120,14 @@
                 android:paddingRight="20dp" />
 
         </LinearLayout>
+        -->
 
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.dev.android.yuu.trainnotificator.TimeSettingFragment"
+            android:id="@+id/fragment2"
+            tools:layout="@layout/fragment_time_setting" />
     </LinearLayout>
 
     <LinearLayout

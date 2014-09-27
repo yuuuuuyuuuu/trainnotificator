@@ -211,10 +211,10 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     {
         // Time setting buttons
         this.mButtonSetStartTime = (Button)this.mView.findViewById(R.id.button_setting_start_time);
-        this.mButtonSetStartTime.setOnClickListener(this);
+        //this.mButtonSetStartTime.setOnClickListener(this);
 
         this.mButtonSetEndTime = (Button)this.mView.findViewById(R.id.button_setting_end_time);
-        this.mButtonSetEndTime.setOnClickListener(this);
+        //this.mButtonSetEndTime.setOnClickListener(this);
 
         // Date type setting radio buttons
         this.mRadioButtonWeekday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_weekday);

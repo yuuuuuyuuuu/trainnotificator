@@ -10,8 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements SettingFragment.OnTrainInfoUpdatedListener, StationSettingFragment.OnStationChangedListener {
+public class MainActivity extends FragmentActivity implements SettingFragment.OnTrainInfoUpdatedListener, StationSettingFragment.OnStationChangedListener, TimeSettingFragment.TimeSettingChangeListener {
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
 
@@ -76,6 +77,40 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
     public void onSettingUpdated()
     {
         Log.d(this.getClass().toString(), "onSettingUpdated");
+    }
+
+    @Override
+    public void onStartTimeChanged(int hourOfDay, int minute)
+    {
+        Log.d(this.getClass().toString(), "onStartTimeChanged(" + hourOfDay + ", " + minute + ")");
+
+        String hourString = String.valueOf(hourOfDay);
+        String minuteString = String.valueOf(minute);
+        if(minute < 10) minuteString = "0" + minuteString;
+        String notificationMessage = "通知開始時刻を" +  hourString + ":" +minuteString + "に設定しました。";
+
+        this.showToast(notificationMessage);
+
+    }
+
+    @Override
+    public void onEndTimeChanged(int hourOfDay, int minute)
+    {
+        Log.d(this.getClass().toString(), "onEndTimeChanged(" + hourOfDay + ", " + minute + ")");
+
+        String hourString = String.valueOf(hourOfDay);
+        String minuteString = String.valueOf(minute);
+        if(minute < 10) minuteString = "0" + minuteString;
+        String notificationMessage = "通知終了時刻を" +  hourString + ":" +minuteString + "に設定しました。";
+
+        this.showToast(notificationMessage);
+    }
+
+    private void showToast(String msg)
+    {
+        Log.d(this.getClass().toString(), "showToast(" + msg + ")");
+
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**
