@@ -90,7 +90,7 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         String notificationMessage = "通知開始時刻を" +  hourString + ":" +minuteString + "に設定しました。";
 
         this.showToast(notificationMessage);
-
+        this.updateNotification();
     }
 
     @Override
@@ -104,6 +104,7 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         String notificationMessage = "通知終了時刻を" +  hourString + ":" +minuteString + "に設定しました。";
 
         this.showToast(notificationMessage);
+        this.updateNotification();
     }
 
     private void showToast(String msg)
@@ -112,6 +113,15 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
 
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+    private void updateNotification()
+    {
+        Log.d(this.getClass().toString(), "updateNotification");
+
+        TrainTimeData nextTrainData = TrainTimeTableManager.getInstance(this).FindNextTrainData();
+        this.mNotificationAlarmManager.SetNotification(this, nextTrainData.HourOfDay(), nextTrainData.Minute());
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.

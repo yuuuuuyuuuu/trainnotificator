@@ -24,16 +24,9 @@ import java.net.UnknownServiceException;
 /**
  * Created by Chieko on 8/30/14.
  */
-public class SettingFragment extends Fragment implements TimePickerDialog.OnTimeSetListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class SettingFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private View mView = null;
-
-    private TimePickerDialog mTimePickerDialog = null;
-
-    // Button
-    private Button mButtonSetStartTime = null;
-    private Button mButtonSetEndTime = null;
-    private int mLastClickButtonId = -1;
 
     // Radio Button
     private RadioButton mRadioButtonWeekday = null;
@@ -63,8 +56,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         this.setUiEventHandlers();
 
-        this.setTimePickerDialog();
-
         this.setUserTime();
 
         this.mIsCreateViewCompleted = true;
@@ -90,53 +81,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
     private void setUserTime()
     {
         Log.d(this.getClass().toString(), "setUserTime");
-
-        int[] startTime = UserDataManager.GetStartTime(getActivity());
-        int[] endTime = UserDataManager.GetEndTime(getActivity());
-
-        // start
-        int startHourOfDay = startTime[0];
-        int startMinute = startTime[1];
-        String startLabel = "7:00";
-        if(-1 == startHourOfDay || -1 == startMinute)
-        {
-            Log.d("setUserTime", "setting default start time");
-        }
-        else
-        {
-            if(startMinute < 10)
-            {
-                startLabel = String.valueOf(startHourOfDay) + ":" + String.valueOf(startMinute) + "0";
-            }
-            else
-            {
-                startLabel = String.valueOf(startHourOfDay) + ":" + String.valueOf(startMinute);
-            }
-
-        }
-        this.mButtonSetStartTime.setText(startLabel);
-
-        // end
-        int endHourOfDay = endTime[0];
-        int endMinute = endTime[1];
-        String endLabel = "9:00";
-        if(-1 == endHourOfDay || -1 == endMinute)
-        {
-            Log.d("setUserTime", "setting default end time");
-        }
-        else
-        {
-            if(endMinute < 10)
-            {
-                endLabel = String.valueOf(endHourOfDay) + ":" + String.valueOf(endMinute) + "0";
-            }
-            else
-            {
-                endLabel = String.valueOf(endHourOfDay) + ":" + String.valueOf(endMinute);
-            }
-
-        }
-        this.mButtonSetEndTime.setText(endLabel);
 
         // Date type
         int dateType = UserDataManager.GetDateType(getActivity());
@@ -202,20 +146,8 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
     }
 
-    private void setTimePickerDialog()
-    {
-        this.mTimePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog_NoActionBar, this, 7, 0, true);
-    }
-
     private void setUiEventHandlers()
     {
-        // Time setting buttons
-        this.mButtonSetStartTime = (Button)this.mView.findViewById(R.id.button_setting_start_time);
-        //this.mButtonSetStartTime.setOnClickListener(this);
-
-        this.mButtonSetEndTime = (Button)this.mView.findViewById(R.id.button_setting_end_time);
-        //this.mButtonSetEndTime.setOnClickListener(this);
-
         // Date type setting radio buttons
         this.mRadioButtonWeekday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_weekday);
         this.mRadioButtonWeekday.setOnCheckedChangeListener(this);
@@ -231,52 +163,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
 
         this.mRadioButtonDirection2 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction2);
         this.mRadioButtonDirection2.setOnCheckedChangeListener(this);
-    }
-
-    private void showTimePickerDialog(String title, int hourOfDay, int minute)
-    {
-        if(null == this.mTimePickerDialog)
-        {
-            Log.e("showTimePickerDialog", "this.mTimePickerDialog is null");
-        }
-
-        this.mTimePickerDialog.updateTime(hourOfDay, minute);
-        this.mTimePickerDialog.setTitle(title);
-        this.mTimePickerDialog.show();
-    }
-
-    private void setStartTime(int hourOfDay, int minute)
-    {
-        Log.d("setStartTime", "Setting start time " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
-
-        UserDataManager.SaveStartTime(hourOfDay, minute, getActivity());
-
-        String minuteString = String.valueOf(minute);
-        if(minute < 10) minuteString = "0" + minuteString;
-
-        String label = String.valueOf(hourOfDay) + ":" + minuteString;
-        this.mButtonSetStartTime.setText(label);
-
-        this.updateNextNotification(false);
-
-        this.showToast("通知開始時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
-    }
-
-    private void setEndTime(int hourOfDay, int minute)
-    {
-        Log.d("setEndTime", "Setting end time " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
-
-        UserDataManager.SaveEndTime(hourOfDay, minute, getActivity());
-
-        String minuteString = String.valueOf(minute);
-        if(minute < 10) minuteString = "0" + minuteString;
-
-        String label = String.valueOf(hourOfDay) + ":" + minuteString;
-        this.mButtonSetEndTime.setText(label);
-
-        this.updateNextNotification(false);
-
-        this.showToast("通知終了時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
 
     private void setDateType(int dateType)
@@ -344,74 +230,6 @@ public class SettingFragment extends Fragment implements TimePickerDialog.OnTime
         }
         if(null != this.mTrainTimeTableManager) this.mTrainTimeTableManager.updateTimetable();
         this.updateNextNotification(true);
-    }
-
-
-    @Override
-    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute)
-    {
-        Log.d("onTimeSet", "Set to " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
-
-        boolean isTimeChanged = false;
-
-        switch (this.mLastClickButtonId)
-        {
-            case R.id.button_setting_start_time:
-                this.setStartTime(hourOfDay, minute);
-                isTimeChanged = true;
-                break;
-
-            case R.id.button_setting_end_time:
-                this.setEndTime(hourOfDay, minute);
-                isTimeChanged = true;
-                break;
-
-            default:
-                this.mLastClickButtonId = -1;
-                break;
-        }
-
-        if(isTimeChanged)
-        {
-            Log.d(this.getClass().toString(), "Launch new notification since user time changed.");
-            this.launchNotification();
-        }
-    }
-
-    @Override
-    public void onClick(View view)
-    {
-        int viewId = view.getId();
-
-        int[] startTime = UserDataManager.GetStartTime(getActivity());
-        int[] endTime = UserDataManager.GetEndTime(getActivity());
-
-        Resources res = getResources();
-
-        switch (viewId)
-        {
-            case R.id.button_setting_start_time:
-                this.setLastClickButtonId(viewId);
-
-                this.showTimePickerDialog(res.getString(R.string.label_setting_starttime_title), startTime[0], startTime[1]);
-                break;
-
-            case R.id.button_setting_end_time:
-                this.setLastClickButtonId(viewId);
-                this.showTimePickerDialog(res.getString(R.string.label_setting_endtime_title), endTime[0], endTime[1]);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    /*
-    Remember which button was pressed to show time picker dialog
-     */
-    private void setLastClickButtonId(int buttonId)
-    {
-        this.mLastClickButtonId = buttonId;
     }
 
     @Override

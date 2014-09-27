@@ -79,8 +79,11 @@ public class TimeSettingFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
 
         this.mView = inflater.inflate(R.layout.fragment_time_setting, container, false);
-        this.initializeTimePickerDialog();
+
         this.setUiEventListeners();
+
+        this.initializeTimePickerDialog();
+        this.initializeTimeSetting();
 
         return this.mView;
 
@@ -89,6 +92,58 @@ public class TimeSettingFragment extends Fragment implements View.OnClickListene
     private void initializeTimePickerDialog()
     {
         this.mTimePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog_NoActionBar, this, 7, 0, true);
+    }
+
+    private void initializeTimeSetting()
+    {
+        Log.d(this.getClass().toString(), "initializeTimeSetting");
+
+        int[] startTime = UserDataManager.GetStartTime(getActivity());
+        int[] endTime = UserDataManager.GetEndTime(getActivity());
+
+        // start
+        int startHourOfDay = startTime[0];
+        int startMinute = startTime[1];
+        String startLabel = "7:00";
+        if(-1 == startHourOfDay || -1 == startMinute)
+        {
+            Log.d("setUserTime", "setting default start time");
+        }
+        else
+        {
+            if(startMinute < 10)
+            {
+                startLabel = String.valueOf(startHourOfDay) + ":" + String.valueOf(startMinute) + "0";
+            }
+            else
+            {
+                startLabel = String.valueOf(startHourOfDay) + ":" + String.valueOf(startMinute);
+            }
+
+        }
+        this.mButtonStartTime.setText(startLabel);
+
+        // end
+        int endHourOfDay = endTime[0];
+        int endMinute = endTime[1];
+        String endLabel = "9:00";
+        if(-1 == endHourOfDay || -1 == endMinute)
+        {
+            Log.d("setUserTime", "setting default end time");
+        }
+        else
+        {
+            if(endMinute < 10)
+            {
+                endLabel = String.valueOf(endHourOfDay) + ":" + String.valueOf(endMinute) + "0";
+            }
+            else
+            {
+                endLabel = String.valueOf(endHourOfDay) + ":" + String.valueOf(endMinute);
+            }
+
+        }
+        this.mButtonEndTime.setText(endLabel);
     }
 
     private void showTimePickerDialog(String title, int hourOfDay, int minute)
