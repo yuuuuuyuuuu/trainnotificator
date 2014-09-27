@@ -13,9 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
-import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
-
 public class MainActivity extends FragmentActivity implements StationSettingFragment.OnStationChangedListener, TimeSettingFragment.TimeSettingChangeListener, DaySettingFragment.OnDayChangeListener, DirectionSettingFragment.OnDirectionChangeListener {
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
@@ -29,7 +26,6 @@ public class MainActivity extends FragmentActivity implements StationSettingFrag
 
         setContentView(R.layout.activity_main);
 
-        // this.mNotificationAlarmManager = new NotificationAlarmManager(this);
         this.mNotificationAlarmManager = NotificationAlarmManager.getInstance(this);
 
         this.initializeFragment();

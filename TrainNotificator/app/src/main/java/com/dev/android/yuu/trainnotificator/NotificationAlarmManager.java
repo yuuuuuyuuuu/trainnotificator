@@ -51,9 +51,6 @@ public class NotificationAlarmManager extends BroadcastReceiver
 
         this.mTrainTimeTableModel = new TrainTimeTableModel(this.mContext);
 
-        TrainTimeData nextTrainData = this.mTrainTimeTableModel.GetNextTrainTime();
-
-        //this.SetNotification(this.mContext, nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
 
     public void SetNotification(Context context, int hourOfDay, int minute)
