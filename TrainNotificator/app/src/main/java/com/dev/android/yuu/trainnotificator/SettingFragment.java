@@ -87,7 +87,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         if(-1 == dateType)
         {
             Log.d("setUserTime", "setting default date type");
-            //dateType = this.DATE_TYPE_WEEKDAY;
             dateType = Constants.DATE_TYPE_WEEKDAY;
         }
 
@@ -98,7 +97,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         if(-1 == directionType)
         {
             Log.d("setUserTime", "setting default direction type");
-            // directionType = this.DIRECTION_TYPE_1;
             directionType = Constants.DIRECTION_TYPE_1;
         }
 
@@ -113,7 +111,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
 
         switch (dateType)
         {
-            // case SettingFragment.DATE_TYPE_WEEKDAY:
             case Constants.DATE_TYPE_WEEKDAY:
                 this.mRadioButtonWeekday.setChecked(true);
                 if(!this.mIsCreateViewCompleted)
@@ -122,7 +119,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
                 }
                 break;
 
-            // case SettingFragment.DATE_TYPE_WEEKEND:
             case Constants.DATE_TYPE_WEEKEND:
                 this.mRadioButtonWeekend.setChecked(true);
                 if(!this.mIsCreateViewCompleted)
@@ -131,7 +127,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
                 }
                 break;
 
-            // case SettingFragment.DATE_TYPE_ALLDAY:
             case Constants.DATE_TYPE_ALLDAY:
                 this.mRadioButtonAllday.setChecked(true);
                 if(!this.mIsCreateViewCompleted)
@@ -169,24 +164,18 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
     {
         switch (dateType)
         {
-            // case SettingFragment.DATE_TYPE_WEEKDAY:
             case Constants.DATE_TYPE_WEEKDAY:
-                // UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKDAY, getActivity());
                 UserDataManager.SaveDateType(Constants.DATE_TYPE_WEEKDAY, getActivity());
 
                 if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "平日のみ" +  " に設定されました");
                 break;
 
-            // case SettingFragment.DATE_TYPE_WEEKEND:
             case Constants.DATE_TYPE_WEEKEND:
-                // UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_WEEKEND, getActivity());
                 UserDataManager.SaveDateType(Constants.DATE_TYPE_WEEKEND, getActivity());
                 if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "土日のみ" +  " に設定されました");
                 break;
 
-            // case SettingFragment.DATE_TYPE_ALLDAY:
             case Constants.DATE_TYPE_ALLDAY:
-                // UserDataManager.SaveDateType(SettingFragment.DATE_TYPE_ALLDAY, getActivity());
                 UserDataManager.SaveDateType(Constants.DATE_TYPE_ALLDAY, getActivity());
 
                 if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "毎日" +  " に設定されました");
@@ -205,9 +194,7 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
 
         switch (directionType)
         {
-            // case SettingFragment.DIRECTION_TYPE_1:
             case Constants.DIRECTION_TYPE_1:
-                //UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_1, getActivity());
                 UserDataManager.SaveDirectionType(Constants.DIRECTION_TYPE_1, getActivity());
 
                 if(this.mIsCreateViewCompleted) this.showToast("方面が " + res.getString(R.string.name_direction1) +  " 方面に設定されました");
@@ -215,9 +202,7 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
                 if(!this.mIsCreateViewCompleted) this.mRadioButtonDirection1.setChecked(true);
                 break;
 
-            // case SettingFragment.DIRECTION_TYPE_2:
             case Constants.DIRECTION_TYPE_2:
-                // UserDataManager.SaveDirectionType(SettingFragment.DIRECTION_TYPE_2, getActivity());
                 UserDataManager.SaveDirectionType(Constants.DIRECTION_TYPE_2, getActivity());
 
                 if(this.mIsCreateViewCompleted) this.showToast("方面が " + res.getString(R.string.name_direction2) +  " 方面に設定されました");
@@ -253,32 +238,26 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         switch (radioButtonId)
         {
             case R.id.radiobutton_setting_weekday:
-
-                // this.setDateType(SettingFragment.DATE_TYPE_WEEKDAY);
                 this.setDateType(Constants.DATE_TYPE_WEEKDAY);
 
                 break;
 
             case R.id.radiobutton_setting_weekend:
-                // this.setDateType(SettingFragment.DATE_TYPE_WEEKEND);
                 this.setDateType(Constants.DATE_TYPE_WEEKEND);
 
                 break;
 
             case R.id.radiobutton_setting_allday:
-                // this.setDateType(SettingFragment.DATE_TYPE_ALLDAY);
                 this.setDateType(Constants.DATE_TYPE_ALLDAY);
 
                 break;
 
             case R.id.radioButton_direction1:
-                // this.setDirectionType(SettingFragment.DIRECTION_TYPE_1);
                 this.setDirectionType(Constants.DIRECTION_TYPE_1);
 
                 break;
 
             case R.id.radioButton_direction2:
-                // this.setDirectionType(SettingFragment.DIRECTION_TYPE_2);
                 this.setDirectionType(Constants.DIRECTION_TYPE_2);
 
                 break;
@@ -344,7 +323,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
             this.mTrainTimeTableManager.updateTimetable();
         }
 
-        // TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainDataWithUserPreference();
         TrainTimeData nextTrainData = this.mTrainTimeTableManager.FindNextTrainData();
 
         if(null == nextTrainData)
