@@ -231,18 +231,14 @@ public class TimeSettingFragment extends Fragment implements View.OnClickListene
     {
         Log.d("onTimeSet", "Set to " + String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
 
-        boolean isTimeChanged = false;
-
         switch (this.mLastClickButtonId)
         {
             case R.id.button_setting_start_time:
                 this.setStartTime(hourOfDay, minute);
-                isTimeChanged = true;
                 break;
 
             case R.id.button_setting_end_time:
                 this.setEndTime(hourOfDay, minute);
-                isTimeChanged = true;
                 break;
 
             default:
@@ -265,10 +261,6 @@ public class TimeSettingFragment extends Fragment implements View.OnClickListene
 
         this.mListener.onStartTimeChanged(hourOfDay, minute);
 
-        //this.updateNextNotification(false);
-
-        // this.showToast("通知開始時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
-
     }
 
     private void setEndTime(int hourOfDay, int minute)
@@ -284,10 +276,6 @@ public class TimeSettingFragment extends Fragment implements View.OnClickListene
         this.mButtonEndTime.setText(label);
 
         this.mListener.onEndTimeChanged(hourOfDay, minute);
-
-        //this.updateNextNotification(false);
-
-        // this.showToast("通知終了時刻が " + hourOfDay + ":" + minuteString + " に設定されました");
     }
 
     /**

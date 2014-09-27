@@ -2,6 +2,7 @@ package com.dev.android.yuu.trainnotificator;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -12,9 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements SettingFragment.OnTrainInfoUpdatedListener, StationSettingFragment.OnStationChangedListener, TimeSettingFragment.TimeSettingChangeListener {
+import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
+import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
+
+public class MainActivity extends FragmentActivity implements SettingFragment.OnTrainInfoUpdatedListener, StationSettingFragment.OnStationChangedListener, TimeSettingFragment.TimeSettingChangeListener, DaySettingFragment.OnDayChangeListener {
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
+
+    // fragments
+    TrainInfoFragment mTrainInfoFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,8 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         // this.mNotificationAlarmManager = new NotificationAlarmManager(this);
         this.mNotificationAlarmManager = NotificationAlarmManager.getInstance(this);
 
+        this.initializeFragment();
+
         /*
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -32,6 +41,15 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
                     .commit();
         }
         */
+    }
+
+    private void initializeFragment()
+    {
+        Log.d(this.getClass().toString(), "initializeFragment");
+
+        FragmentManager fm = this.getFragmentManager();
+
+        this.mTrainInfoFragment = (TrainInfoFragment)fm.findFragmentById(R.id.traininfo_fragment);
     }
 
     @Override
@@ -90,7 +108,7 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         String notificationMessage = "通知開始時刻を" +  hourString + ":" +minuteString + "に設定しました。";
 
         this.showToast(notificationMessage);
-        this.updateNotification();
+        this.update();
     }
 
     @Override
@@ -104,7 +122,38 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         String notificationMessage = "通知終了時刻を" +  hourString + ":" +minuteString + "に設定しました。";
 
         this.showToast(notificationMessage);
-        this.updateNotification();
+        this.update();
+    }
+
+    @Override
+    public void onDayChanged(int dayType)
+    {
+        Log.d(this.getClass().toString(), "onDayChanged(" + dayType + ")");
+
+        Resources res = this.getResources();
+        String displayDayName = "";
+        switch (dayType)
+        {
+            case Constants.DATE_TYPE_WEEKDAY:
+                displayDayName = res.getString(R.string.label_setting_date_weekday);
+                break;
+
+            case Constants.DATE_TYPE_WEEKEND:
+                displayDayName = res.getString(R.string.label_setting_date_weekend);
+                break;
+
+            case Constants.DATE_TYPE_ALLDAY:
+                displayDayName = res.getString(R.string.label_setting_date_allday);
+                break;
+
+            default:
+                break;
+        }
+
+        String notificatioMessage = "通知日時を" + displayDayName + "に設定しました。";
+        this.showToast(notificatioMessage);
+        this.update();
+
     }
 
     private void showToast(String msg)
@@ -114,14 +163,19 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void updateNotification()
+    private void update()
     {
-        Log.d(this.getClass().toString(), "updateNotification");
+        Log.d(this.getClass().toString(), "update");
 
+        // update display
+        if(null == this.mTrainInfoFragment) this.initializeFragment();
+        this.mTrainInfoFragment.updateTrainInfo();
+
+        // update notification
         TrainTimeData nextTrainData = TrainTimeTableManager.getInstance(this).FindNextTrainData();
+        if(null == this.mNotificationAlarmManager) this.mNotificationAlarmManager = NotificationAlarmManager.getInstance(this);
         this.mNotificationAlarmManager.SetNotification(this, nextTrainData.HourOfDay(), nextTrainData.Minute());
     }
-
 
     /**
      * A placeholder fragment containing a simple view.

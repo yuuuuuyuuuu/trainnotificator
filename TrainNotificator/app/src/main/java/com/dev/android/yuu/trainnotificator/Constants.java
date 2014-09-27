@@ -9,6 +9,7 @@ public class Constants
     public final static int DATE_TYPE_WEEKDAY = 1;
     public final static int DATE_TYPE_WEEKEND = 2;
     public final static int DATE_TYPE_ALLDAY = 3;
+    public final static String DATE_DISPLAY_NAME_WEEKDAY = "平日のみ";
 
     // Direction Type
     public final static int DIRECTION_TYPE_1 = 1;

@@ -28,11 +28,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
 
     private View mView = null;
 
-    // Radio Button
-    private RadioButton mRadioButtonWeekday = null;
-    private RadioButton mRadioButtonWeekend = null;
-    private RadioButton mRadioButtonAllday = null;
-
     private RadioButton mRadioButtonDirection1 = null;
     private RadioButton mRadioButtonDirection2 = null;
 
@@ -82,16 +77,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
     {
         Log.d(this.getClass().toString(), "setUserTime");
 
-        // Date type
-        int dateType = UserDataManager.GetDateType(getActivity());
-        if(-1 == dateType)
-        {
-            Log.d("setUserTime", "setting default date type");
-            dateType = Constants.DATE_TYPE_WEEKDAY;
-        }
-
-        this.setDateTypeCheck(dateType);
-
         // Direction
         int directionType = UserDataManager.GetDirectionType(getActivity());
         if(-1 == directionType)
@@ -105,87 +90,13 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         this.launchNotification();
     }
 
-    private void setDateTypeCheck(int dateType)
-    {
-        Log.d(this.getClass().toString(), "setDateTypeCheck(" + dateType + ")");
-
-        switch (dateType)
-        {
-            case Constants.DATE_TYPE_WEEKDAY:
-                this.mRadioButtonWeekday.setChecked(true);
-                if(!this.mIsCreateViewCompleted)
-                {
-                    this.setSelectedStyle(this.mRadioButtonWeekday);
-                }
-                break;
-
-            case Constants.DATE_TYPE_WEEKEND:
-                this.mRadioButtonWeekend.setChecked(true);
-                if(!this.mIsCreateViewCompleted)
-                {
-                    this.setSelectedStyle(this.mRadioButtonWeekend);
-                }
-                break;
-
-            case Constants.DATE_TYPE_ALLDAY:
-                this.mRadioButtonAllday.setChecked(true);
-                if(!this.mIsCreateViewCompleted)
-                {
-                    this.setSelectedStyle(this.mRadioButtonAllday);
-                }
-                break;
-
-            default:
-                break;
-
-        }
-    }
-
     private void setUiEventHandlers()
     {
-        // Date type setting radio buttons
-        this.mRadioButtonWeekday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_weekday);
-        this.mRadioButtonWeekday.setOnCheckedChangeListener(this);
-
-        this.mRadioButtonWeekend = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_weekend);
-        this.mRadioButtonWeekend.setOnCheckedChangeListener(this);
-
-        this.mRadioButtonAllday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_allday);
-        this.mRadioButtonAllday.setOnCheckedChangeListener(this);
-
         this.mRadioButtonDirection1 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction1);
         this.mRadioButtonDirection1.setOnCheckedChangeListener(this);
 
         this.mRadioButtonDirection2 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction2);
         this.mRadioButtonDirection2.setOnCheckedChangeListener(this);
-    }
-
-    private void setDateType(int dateType)
-    {
-        switch (dateType)
-        {
-            case Constants.DATE_TYPE_WEEKDAY:
-                UserDataManager.SaveDateType(Constants.DATE_TYPE_WEEKDAY, getActivity());
-
-                if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "平日のみ" +  " に設定されました");
-                break;
-
-            case Constants.DATE_TYPE_WEEKEND:
-                UserDataManager.SaveDateType(Constants.DATE_TYPE_WEEKEND, getActivity());
-                if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "土日のみ" +  " に設定されました");
-                break;
-
-            case Constants.DATE_TYPE_ALLDAY:
-                UserDataManager.SaveDateType(Constants.DATE_TYPE_ALLDAY, getActivity());
-
-                if(this.mIsCreateViewCompleted) this.showToast("通知日が " + "毎日" +  " に設定されました");
-                break;
-
-            default:
-                break;
-        }
-
-        this.updateNextNotification(true);
     }
 
     private void setDirectionType(int directionType)
@@ -237,21 +148,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
 
         switch (radioButtonId)
         {
-            case R.id.radiobutton_setting_weekday:
-                this.setDateType(Constants.DATE_TYPE_WEEKDAY);
-
-                break;
-
-            case R.id.radiobutton_setting_weekend:
-                this.setDateType(Constants.DATE_TYPE_WEEKEND);
-
-                break;
-
-            case R.id.radiobutton_setting_allday:
-                this.setDateType(Constants.DATE_TYPE_ALLDAY);
-
-                break;
-
             case R.id.radioButton_direction1:
                 this.setDirectionType(Constants.DIRECTION_TYPE_1);
 
