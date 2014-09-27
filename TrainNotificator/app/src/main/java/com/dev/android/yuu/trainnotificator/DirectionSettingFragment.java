@@ -1,6 +1,7 @@
 package com.dev.android.yuu.trainnotificator;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -15,13 +16,13 @@ import android.widget.RadioButton;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DaySettingFragment.OnDayChangeListener} interface
+ * {@link DirectionSettingFragment.OnDirectionChangeListener} interface
  * to handle interaction events.
- * Use the {@link DaySettingFragment#newInstance} factory method to
+ * Use the {@link DirectionSettingFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
-public class DaySettingFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class DirectionSettingFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,16 +32,12 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
     private String mParam1;
     private String mParam2;
 
-    private OnDayChangeListener mListener;
+    private OnDirectionChangeListener mListener;
 
     private View mView = null;
-
-    // Radio Button
-    private RadioButton mRadioButtonWeekday = null;
-    private RadioButton mRadioButtonWeekend = null;
-    private RadioButton mRadioButtonAllday = null;
-
-    private boolean mIsInitialSettingCompleted = false;
+    private RadioButton mRadioButtonDirection1 = null;
+    private RadioButton mRadioButtonDirection2 = null;
+    private boolean mIsInitializeCompleted = false;
 
     /**
      * Use this factory method to create a new instance of
@@ -48,18 +45,18 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DaySettingFragment.
+     * @return A new instance of fragment DirectionSettingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DaySettingFragment newInstance(String param1, String param2) {
-        DaySettingFragment fragment = new DaySettingFragment();
+    public static DirectionSettingFragment newInstance(String param1, String param2) {
+        DirectionSettingFragment fragment = new DirectionSettingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-    public DaySettingFragment() {
+    public DirectionSettingFragment() {
         // Required empty public constructor
     }
 
@@ -76,66 +73,57 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.mView = inflater.inflate(R.layout.fragment_day_setting, container, false);
+        this.mView = inflater.inflate(R.layout.fragment_direction_setting, container, false);
 
-        this.setUiEventHandlers();
-        this.initializeDay();
+        this.setUiEventListeners();
+
+        this.initializeDirection();
 
         return this.mView;
     }
 
-    private void initializeDay()
+    private void initializeDirection()
     {
-        Log.d(this.getClass().toString(), "initializeDay");
+        Log.d(this.getClass().toString(), "initializeDirection");
 
-        int day = UserDataManager.GetDateType(this.getActivity());
+        int directionType = UserDataManager.GetDirectionType(this.getActivity());
 
-        switch (day)
+        switch (directionType)
         {
-            case Constants.DATE_TYPE_WEEKDAY:
-                this.mRadioButtonWeekday.setChecked(true);
+            case Constants.DIRECTION_TYPE_1:
+                this.mRadioButtonDirection1.setChecked(true);
                 break;
 
-            case Constants.DATE_TYPE_WEEKEND:
-                this.mRadioButtonWeekend.setChecked(true);
-                break;
-
-            case Constants.DATE_TYPE_ALLDAY:
-                this.mRadioButtonAllday.setChecked(true);
+            case Constants.DIRECTION_TYPE_2:
+                this.mRadioButtonDirection2.setChecked(true);
                 break;
 
             default:
-                this.mRadioButtonWeekday.setChecked(true);
+                this.mRadioButtonDirection1.setChecked(true);
                 break;
+
         }
 
-        this.mIsInitialSettingCompleted = true;
+        this.mIsInitializeCompleted = true;
     }
 
-    private void setUiEventHandlers()
+    private void setUiEventListeners()
     {
-        Log.d(this.getClass().toString(), "setUiEventHandlers");
+        Log.d(this.getClass().toString(), "setUiEventListeners");
 
-        this.mRadioButtonWeekday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_weekday);
-        this.mRadioButtonWeekend = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_weekend);
-        this.mRadioButtonAllday = (RadioButton)this.mView.findViewById(R.id.radiobutton_setting_allday);
+        this.mRadioButtonDirection1 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction1);
+        this.mRadioButtonDirection2 = (RadioButton)this.mView.findViewById(R.id.radioButton_direction2);
 
-        this.mRadioButtonWeekday.setOnCheckedChangeListener(this);
-        this.mRadioButtonWeekend.setOnCheckedChangeListener(this);
-        this.mRadioButtonAllday.setOnCheckedChangeListener(this);
-
+        this.mRadioButtonDirection1.setOnCheckedChangeListener(this);
+        this.mRadioButtonDirection2.setOnCheckedChangeListener(this);
     }
 
     @Override
-    public void onAttach(Activity activity)
-    {
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try
-        {
-            mListener = (OnDayChangeListener) activity;
-        }
-        catch (ClassCastException e)
-        {
+        try {
+            mListener = (OnDirectionChangeListener) activity;
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
@@ -167,18 +155,13 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
 
         switch (radioButtonId)
         {
-            case R.id.radiobutton_setting_weekday:
-                this.setDateType(Constants.DATE_TYPE_WEEKDAY);
+            case R.id.radioButton_direction1:
+                this.setDirectionType(Constants.DIRECTION_TYPE_1);
 
                 break;
 
-            case R.id.radiobutton_setting_weekend:
-                this.setDateType(Constants.DATE_TYPE_WEEKEND);
-
-                break;
-
-            case R.id.radiobutton_setting_allday:
-                this.setDateType(Constants.DATE_TYPE_ALLDAY);
+            case R.id.radioButton_direction2:
+                this.setDirectionType(Constants.DIRECTION_TYPE_2);
 
                 break;
 
@@ -194,11 +177,9 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
 
         int id = radioButton.getId();
 
-        if(R.id.radiobutton_setting_weekday == id
-                || R.id.radiobutton_setting_weekend == id
-                || R.id.radiobutton_setting_allday == id)
+        if(R.id.radioButton_direction1 == id || R.id.radioButton_direction2 == id)
         {
-            radioButton.setBackgroundResource(R.drawable.round_green_button);
+            radioButton.setBackgroundResource(R.drawable.round_orange_button);
         }
         else
         {
@@ -212,11 +193,9 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
 
         int id = radioButton.getId();
 
-        if(R.id.radiobutton_setting_weekday == id
-                || R.id.radiobutton_setting_weekend == id
-                || R.id.radiobutton_setting_allday == id)
+        if(R.id.radioButton_direction1 == id || R.id.radioButton_direction2 == id)
         {
-            radioButton.setBackgroundResource(R.drawable.round_button_pale_green);
+            radioButton.setBackgroundResource(R.drawable.round_button_pale_orange);
         }
         else
         {
@@ -224,20 +203,17 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
         }
     }
 
-    private void setDateType(int dateType)
+    private void setDirectionType(int directionType)
     {
-        switch (dateType)
+        switch (directionType)
         {
-            case Constants.DATE_TYPE_WEEKDAY:
-                UserDataManager.SaveDateType(Constants.DATE_TYPE_WEEKDAY, getActivity());
+            case Constants.DIRECTION_TYPE_1:
+                UserDataManager.SaveDirectionType(Constants.DIRECTION_TYPE_1, getActivity());
+
                 break;
 
-            case Constants.DATE_TYPE_WEEKEND:
-                UserDataManager.SaveDateType(Constants.DATE_TYPE_WEEKEND, getActivity());
-                break;
-
-            case Constants.DATE_TYPE_ALLDAY:
-                UserDataManager.SaveDateType(Constants.DATE_TYPE_ALLDAY, getActivity());
+            case Constants.DIRECTION_TYPE_2:
+                UserDataManager.SaveDirectionType(Constants.DIRECTION_TYPE_2, getActivity());
 
                 break;
 
@@ -245,7 +221,8 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
                 break;
         }
 
-        if(this.mIsInitialSettingCompleted) this.mListener.onDayChanged(dateType);
+        if(this.mIsInitializeCompleted) this.mListener.onDirectionChanged(directionType);
+
     }
 
     /**
@@ -258,9 +235,9 @@ public class DaySettingFragment extends Fragment implements CompoundButton.OnChe
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnDayChangeListener
+    public interface OnDirectionChangeListener
     {
-        public void onDayChanged(int dayType);
+        public void onDirectionChanged(int directionType);
     }
 
 }

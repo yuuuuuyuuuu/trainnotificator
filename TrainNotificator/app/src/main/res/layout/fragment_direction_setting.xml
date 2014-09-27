@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dev.android.yuu.trainnotificator.DirectionSettingFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/label_setting_direction_title"
+        android:id="@+id/textView4"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="top"
+        android:textSize="8pt"
+        android:textColor="@color/darkgray" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/radioGroup">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/label_direction_shinjuku"
+            android:id="@+id/radioButton_direction1"
+            android:background="@drawable/round_button_pale_orange"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="10pt"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:shadowColor="@color/gray"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="5" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_direction_ofuna"
+            android:id="@+id/radioButton_direction2"
+            android:background="@drawable/round_button_pale_orange"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="10pt"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
+            android:shadowColor="@color/gray"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="5" />
+
+    </RadioGroup>
+</LinearLayout>

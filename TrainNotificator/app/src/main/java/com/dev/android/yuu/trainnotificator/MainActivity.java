@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.dev.android.yuu.trainnotificator.utility.CalendarUtility;
 import com.dev.android.yuu.trainnotificator.utility.TrainTimeTableUtility;
 
-public class MainActivity extends FragmentActivity implements SettingFragment.OnTrainInfoUpdatedListener, StationSettingFragment.OnStationChangedListener, TimeSettingFragment.TimeSettingChangeListener, DaySettingFragment.OnDayChangeListener {
+public class MainActivity extends FragmentActivity implements StationSettingFragment.OnStationChangedListener, TimeSettingFragment.TimeSettingChangeListener, DaySettingFragment.OnDayChangeListener, DirectionSettingFragment.OnDirectionChangeListener {
 
     private NotificationAlarmManager mNotificationAlarmManager = null;
 
@@ -82,22 +82,6 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
     }
 
     @Override
-    public void onTrainInfoUpdated()
-    {
-        Log.d(this.getClass().toString(), "onTrainInfoUpdated(");
-
-        FragmentManager fm = getFragmentManager();
-        TrainInfoFragment fragment = (TrainInfoFragment)fm.findFragmentById(R.id.traininfo_fragment);
-        fragment.updateTrainInfo();
-    }
-
-    @Override
-    public void onSettingUpdated()
-    {
-        Log.d(this.getClass().toString(), "onSettingUpdated");
-    }
-
-    @Override
     public void onStartTimeChanged(int hourOfDay, int minute)
     {
         Log.d(this.getClass().toString(), "onStartTimeChanged(" + hourOfDay + ", " + minute + ")");
@@ -154,6 +138,34 @@ public class MainActivity extends FragmentActivity implements SettingFragment.On
         this.showToast(notificatioMessage);
         this.update();
 
+    }
+
+    @Override
+    public void onDirectionChanged(int directionType)
+    {
+        Log.d(this.getClass().toString(), "onDirectionChanged(" + directionType + ")");
+
+        String directionDisplayName = "";
+        Resources res = this.getResources();
+
+        switch (directionType)
+        {
+            case Constants.DIRECTION_TYPE_1:
+                directionDisplayName = res.getString(R.string.name_direction1);
+                break;
+
+            case Constants.DIRECTION_TYPE_2:
+                directionDisplayName = res.getString(R.string.name_direction2);
+                break;
+
+            default:
+                break;
+        }
+
+        String notificationMessage = "方面を" + directionDisplayName + "に設定しました。";
+
+        this.showToast(notificationMessage);
+        this.update();
     }
 
     private void showToast(String msg)
