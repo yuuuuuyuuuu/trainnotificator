@@ -21,6 +21,8 @@ public class Constants
     public final static int STATION_ID_MUSASHIKOSUGI = 3;
     public final static int STATION_ID_NISHIOI = 4;
     public final static int STATION_ID_OSAKI = 5;
-    public final static int STATION_ID_TOTSUKA = 6;
+    public final static int STATION_ID_HODOGAYA = 6;
+    public final static int STATION_ID_HIGASHITOTSUKA = 7;
+    public final static int STATION_ID_TOTSUKA = 8;
 
 }

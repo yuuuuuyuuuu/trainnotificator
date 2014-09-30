@@ -106,14 +106,19 @@ public class StationSettingFragment extends Fragment implements View.OnClickList
         StationData stationData3 = new StationData("武蔵小杉", Constants.STATION_ID_MUSASHIKOSUGI);
         //StationData stationData4 = new StationData("西大井", Constants.STATION_ID_NISHIOI);
         StationData stationData5 = new StationData("大崎", Constants.STATION_ID_OSAKI);
+        StationData stationData6 = new StationData("保土ヶ谷", Constants.STATION_ID_HODOGAYA);
+        StationData stationData7 = new StationData("東戸塚", Constants.STATION_ID_HIGASHITOTSUKA);
+        StationData stationData8 = new StationData("戸塚", Constants.STATION_ID_TOTSUKA);
 
         this.mStationDataList.add(stationData1);
         this.mStationDataList.add(stationData2);
         this.mStationDataList.add(stationData3);
         //this.mStationDataList.add(stationData4);
         this.mStationDataList.add(stationData5);
+        this.mStationDataList.add(stationData6);
+        this.mStationDataList.add(stationData7);
+        this.mStationDataList.add(stationData8);
 
-        //ArrayAdapter<StationData> arrayAdapter = new ArrayAdapter<StationData>(this.getActivity(), android.R.layout.simple_list_item_1, this.mStationDataList);
         StationListAdapter stationListAdapter = new StationListAdapter(this.getActivity(), R.layout.station_list_item, this.mStationDataList);
 
         this.mStationListView = new ListView(this.getActivity());

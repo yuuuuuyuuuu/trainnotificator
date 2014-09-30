@@ -62,6 +62,17 @@ public class TrainTimeTableUtility
 
             case Constants.STATION_ID_OSAKI:
                 stationName = "大崎";
+
+            case Constants.STATION_ID_HODOGAYA:
+                stationName = "保土ヶ谷";
+                break;
+
+            case Constants.STATION_ID_HIGASHITOTSUKA:
+                stationName = "東戸塚";
+                break;
+
+            case Constants.STATION_ID_TOTSUKA:
+                stationName = "戸塚";
                 break;
 
             default:
@@ -94,6 +105,18 @@ public class TrainTimeTableUtility
 
             case Constants.STATION_ID_OSAKI:
                 stationName = "osaki";
+                break;
+
+            case Constants.STATION_ID_HODOGAYA:
+                stationName = "hodogaya";
+                break;
+
+            case Constants.STATION_ID_HIGASHITOTSUKA:
+                stationName = "higashitotsuka";
+                break;
+
+            case Constants.STATION_ID_TOTSUKA:
+                stationName = "totsuka";
                 break;
 
             default:
